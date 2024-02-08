@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 const courseSchema = new mongoose.Schema({
   courseName: {
     type: String,
@@ -37,8 +37,12 @@ const courseSchema = new mongoose.Schema({
     type: String,
   },
   tag: {
+    type: [String],
+    required: true,
+  },
+  catagory: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Tag",
+    ref: "Catagory",
   },
   studentsEnrolled: [
     {
@@ -47,6 +51,6 @@ const courseSchema = new mongoose.Schema({
       required: true,
     },
   ],
-})
+});
 
-module.exports = mongoose.model("Course", courseSchema)
+module.exports = mongoose.model("Course", courseSchema);
