@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 const ratingAndReviews = new mongoose.Schema({
   user: {
@@ -14,6 +14,12 @@ const ratingAndReviews = new mongoose.Schema({
     required: true,
     type: String,
   },
-})
+  course: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "Course",
+    index: true,
+  },
+});
 
-module.exports = mongoose.model("RatingAndReview", ratingAndReviews)
+module.exports = mongoose.model("RatingAndReview", ratingAndReviews);

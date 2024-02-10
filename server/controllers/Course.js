@@ -123,3 +123,40 @@ exports.showAllCourse = async (req, res) => {
     });
   }
 };
+
+exports.getAllCourse = async (req, res) => {
+  try {
+    const { courseId } = req.body;
+    const course = await Course.findById(courseId)
+      .populate({
+        path: "instructor",
+        populate: {
+          path: "additionalDetails",
+        },
+      })
+      .populate({
+        path: "courseContent",
+        populate: {
+          path: "subSection",
+        },
+      })
+      .populate("ratingAndReviews")
+      .populate("Catagory")
+      .populate("studentsEnrolled")
+      .exec();
+
+    if (!course) {
+      return res.status(400).json({
+        success: false,
+        message: "Course not found",
+      });
+    }
+  } catch (error) {
+    console.error("get all courses Error : ", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch all course",
+      error: error.message,
+    });
+  }
+};
