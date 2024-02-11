@@ -52,3 +52,42 @@ exports.showAllCategory = async (req, res) => {
     });
   }
 };
+exports.catagoryPageDetails = async (req, res) => {
+  try {
+    const { catagoryId } = req.body;
+    const selectedCategory = await Category.findById(catagoryId)
+      .populate("course")
+      .exec();
+    if (!selectedCategory) {
+      return res.status(404).json({
+        success: false,
+        message: "selected category not found",
+      });
+    }
+    const diffCatagory = await Category.findById({
+      _id: { $ne: catagoryId },
+    })
+      .populate("course")
+      .exec();
+    const allCatagory = await Category.find().populate({
+      path: "course",
+      match: { status: "published" },
+    });
+
+    const allcourse = allCatagory.flatMap((item) => item.course);
+    const mostselled = allcourse.sort((a, b) => a.sold - b.sold).slice(0.1);
+    res.status(200).json({
+      success: true,
+      message: "here all catagorys",
+      selectedCategory,
+      mostselled,
+      diffCatagory,
+    });
+  } catch (error) {
+    console.log("error occurd when finding selected catagory : ", error);
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
