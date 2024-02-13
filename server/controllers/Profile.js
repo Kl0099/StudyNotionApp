@@ -1,5 +1,7 @@
 const User = require("../models/User");
+const Course = require("../models/Course");
 const Profile = require("../models/Profile");
+const mongoose = require("mongoose");
 
 exports.updateProfile = async (req, res) => {
   try {
@@ -33,7 +35,7 @@ exports.updateProfile = async (req, res) => {
   }
 };
 
-exports.updateProfile = async (req, res) => {
+exports.deleteAccount = async (req, res) => {
   try {
     const id = req.user.id;
     const user = await User.findById(id);
@@ -45,11 +47,23 @@ exports.updateProfile = async (req, res) => {
     }
     //delete additional details
 
-    await Profile.findByIdAndDelete({ _id: user.additionalDetails });
+    await Profile.findByIdAndDelete({
+      _id: new mongoose.Types.ObjectId(user.additionalDetails),
+    });
 
     //delete user from all enrolled courses
-
     //delete user
+    for (const courseId of user.courses) {
+      await Course.findByIdAndDelete(
+        courseId,
+        {
+          $pull: { studentEnroled: id },
+        },
+        {
+          new: true,
+        }
+      );
+    }
     await User.findByIdAndDelete({ _id: id });
 
     res.status(200).json({
