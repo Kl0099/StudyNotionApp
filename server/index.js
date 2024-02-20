@@ -6,6 +6,7 @@ const userRoute = require("./routes/User");
 const profileRoute = require("./routes/Profile");
 const CourseRoute = require("./routes/Course");
 const paymentRoute = require("./routes/Payments");
+const catagoryRoute = require("./routes/Catagory");
 require("dotenv").config();
 const { cloudinaryConnection } = require("./config/cloudinary");
 const fileUpload = require("express-fileupload");
@@ -14,7 +15,7 @@ dataBase.connect();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "*",
     credentials: true,
   })
 );
@@ -31,6 +32,7 @@ cloudinaryConnection();
 app.use("/api/v1/auth", userRoute);
 app.use("/api/v1/profile", profileRoute);
 app.use("/api/v1/course", CourseRoute);
+app.use("/api/v1/category", catagoryRoute);
 app.use("/api/v1/payment", paymentRoute);
 
 app.get("/", (req, res) => {

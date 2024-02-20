@@ -36,8 +36,12 @@ const userSchema = new mongoose.Schema({
     },
   ],
   image: {
-    type: String,
-    required: true,
+    public_id: {
+      type: String,
+    },
+    url: {
+      type: String,
+    },
   },
   courseProgress: [
     { type: mongoose.Schema.Types.ObjectId, ref: "CourseProgress" },

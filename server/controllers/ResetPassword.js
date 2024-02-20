@@ -1,6 +1,8 @@
 const User = require("../models/User");
 const mailSender = require("../utils/mailSender");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
+const mongoose = require("mongoose");
 
 //resetPassword token
 exports.resetPasswordToken = async (req, res) => {
@@ -14,12 +16,12 @@ exports.resetPasswordToken = async (req, res) => {
       });
     }
 
-    const token = crypto.randomUUID();
+    const token = crypto.randomBytes(20).toString("hex");
     const updateDetails = await User.findOneAndUpdate(
       { email: email },
       {
         token: token,
-        resetPasswordExpires: Date.now() + 5 * 60 * 1000,
+        resetPasswordExpires: Date.now() + 5 * 60 * 1000, //5 minutes
       },
       { new: true }
     );
@@ -51,14 +53,18 @@ exports.resetPassword = async (req, res) => {
   try {
     //data fetch
     const { password, confirmPassword, token } = req.body;
+    // console.log(token);
     if (password !== confirmPassword) {
       return res.status(403).json({
         success: false,
         message: "password is not matching",
       });
     }
+    // let objecttoken = new mongoose.Types.ObjectId(token);
+    // console.log(objecttoken);
 
     const userDetails = await User.findOne({ token: token });
+    console.log(userDetails);
     if (!userDetails) {
       return res.status(403).json({
         success: false,
@@ -75,7 +81,7 @@ exports.resetPassword = async (req, res) => {
     const saltRound = 10;
     const salt = await bcrypt.genSalt(saltRound);
     const hashPassword = await bcrypt.hash(password, salt);
-    await User.findByIdAndUpdate(
+    await User.findOneAndUpdate(
       { token: token },
       {
         password: hashPassword,

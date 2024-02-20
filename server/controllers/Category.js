@@ -5,7 +5,6 @@ exports.createCategory = async (req, res) => {
   try {
     //fetch data
     const { name, description } = req.body;
-    validation;
     if (!name || !description) {
       return res.status(400).json({
         success: false,
@@ -17,7 +16,7 @@ exports.createCategory = async (req, res) => {
       name: name,
       description: description,
     });
-    console.log(categoryDetails);
+    // console.log(categoryDetails);
 
     return res.status(200).json({
       success: true,

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const mailSender = require("../utils/mailSender");
+const otpTemplate = require("../mail/templates/emailVerificationTemplate");
 const otpSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -22,9 +23,9 @@ async function sendVarificationEmail(email, otp) {
     const mailRes = await mailSender(
       email,
       "Verification  email from StudyNotion",
-      otp
+      otpTemplate(otp)
     );
-    console.log("email sent successfully", mailRes);
+    console.log("email sent successfully");
   } catch (error) {
     console.log("verification email error: " + error);
     // console.log(error)

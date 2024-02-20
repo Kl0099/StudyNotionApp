@@ -7,8 +7,14 @@ const { uploadImageToCloudinary } = require("../utils/imageUploader");
 exports.createCourse = async (req, res) => {
   try {
     //feetch data
-    const { courseName, courseDescription, whatYouWillLearn, price, category } =
-      req.body;
+    const {
+      courseName,
+      courseDescription,
+      whatYouWillLearn,
+      price,
+      category,
+      tag,
+    } = req.body;
     const thumbnail = req.files.thumbnailImage;
 
     if (

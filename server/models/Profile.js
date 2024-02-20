@@ -1,8 +1,8 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 const profileSchema = new mongoose.Schema({
   gender: {
     type: String,
-    enum: ["Male", "Female"],
+    enum: ["male", "female"],
   },
   dateOfBirth: {
     type: String,
@@ -15,6 +15,6 @@ const profileSchema = new mongoose.Schema({
     type: Number,
     trim: true,
   },
-})
+});
 
-module.exports = mongoose.model("profile", profileSchema)
+module.exports = mongoose.model("Profile", profileSchema);

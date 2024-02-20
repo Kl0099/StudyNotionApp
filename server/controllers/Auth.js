@@ -135,6 +135,7 @@ exports.signUp = async (req, res) => {
       about: null,
       contactNumber: null,
     });
+    const userImage = `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`;
 
     const user = await User.create({
       firstName,
@@ -145,7 +146,10 @@ exports.signUp = async (req, res) => {
       password: hashPassword,
       accountType,
       additionalDetails: profileDetails._id,
-      image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
+      image: {
+        public_id: null,
+        url: userImage,
+      },
     });
 
     return res.status(200).json({

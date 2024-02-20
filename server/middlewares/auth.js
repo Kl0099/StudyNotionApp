@@ -22,7 +22,7 @@ exports.auth = async (req, res, next) => {
 
     try {
       const decode = jwt.verify(token, process.env.JWT_SECRET);
-      console.log("decoded : ", decode);
+      // console.log("decoded : ", decode);
       req.user = decode;
     } catch (error) {
       return res.status(401).json({
@@ -60,7 +60,10 @@ exports.isStudent = async (req, res, next) => {
 
 exports.isAdmin = async (req, res, next) => {
   try {
-    if (req.user.accountType !== "Admin") {
+    // console.log(req.user);
+    const userDetails = await User.findOne({ email: req.user.email });
+
+    if (userDetails.accountType !== "Admin") {
       return res.status(401).json({
         success: false,
         message: "this route for admin only",
@@ -78,7 +81,10 @@ exports.isAdmin = async (req, res, next) => {
 
 exports.isInstructor = async (req, res, next) => {
   try {
-    if (req.user.accountType !== "Instuctor") {
+    console.log(req.user);
+    const userDetails = await User.findOne({ email: req.user.email });
+    console.log(userDetails.accountType);
+    if (userDetails.accountType !== "Instructor") {
       return res.status(401).json({
         success: false,
         message: "this route for Instructor only",

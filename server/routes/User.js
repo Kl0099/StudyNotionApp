@@ -15,7 +15,7 @@ const router = express.Router();
 
 router.post("/login", login);
 router.post("/signup", signUp);
-router.post("sendotp", sendotp);
+router.post("/sendotp", sendotp);
 
 //changepassword
 router.post("/changepassword", auth, changePassword);
