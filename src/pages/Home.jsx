@@ -4,9 +4,13 @@ import { Link } from "react-router-dom";
 import Highlighted from "../components/core/homepage/Highlighted";
 import CTAbutton from "../components/core/homepage/Button";
 import CodeBlocks from "../components/core/homepage/CodeBlocks.jsx";
-
+import "../App.css";
 // Image and Video Import
 import Banner from "../assets/Images/banner.mp4";
+import TimeLineSection from "../components/core/homepage/TimeLineSection.jsx";
+import Learning from "../components/core/homepage/Learning.jsx";
+import TimelineSection from "../components/core/homepage/TimeLineSection.jsx";
+import BecomeInstuctore from "../components/core/homepage/BecomeInstuctore.jsx";
 
 const Home = () => {
   return (
@@ -23,12 +27,12 @@ const Home = () => {
         </Link>
 
         {/* heading */}
-        <div className=" text-left sm:text-center text-4xl font-semibold ">
+        <div className=" text-left sm:text-center text-3xl sm:text-4xl font-semibold ">
           Empower Your Future with <Highlighted text={"Coding Skills"} />
         </div>
 
         {/* Sub Heading */}
-        <div className="-mt-3 w-[80%] text-left sm:text-center text-lg font-bold text-richblack-300">
+        <div className="-mt-3 sm:w-[80%] text-left sm:text-center text-lg font-bold text-richblack-300">
           With our online coding courses, you can learn at your own pace, from
           anywhere in the world, and get access to a wealth of resources,
           including hands-on projects, quizzes, and personalized feedback from
@@ -122,6 +126,65 @@ const Home = () => {
             backgroundGradient={<div className="codeblock2 absolute"></div>}
           />
         </div>
+
+        {/* cod esection 3  */}
+        <div className=" bg-pure-greys-5 text-richblack-700  max-w-maxContent">
+          <div className="homepage_bg h-[333px] ">
+            <div className="h-[100px]"></div>
+            <div className=" w-11/12 max-w-maxContent flex item-center justify-center gap-5 mx-auto">
+              <div className="flex sm:flex-row gap-7 text-white">
+                <CTAbutton
+                  linkto={"/signup "}
+                  active={true}
+                >
+                  {" "}
+                  <div className="flex gap-3 items-center ">
+                    Explore full Catalog
+                    <FaArrowRightLong />
+                  </div>{" "}
+                </CTAbutton>
+                <CTAbutton
+                  active={false}
+                  linkto={"/signup"}
+                >
+                  <div>Learn More</div>
+                </CTAbutton>
+              </div>
+            </div>
+          </div>
+
+          <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 ">
+            {/* Job that is in Demand - Section 1 */}
+            <div className="mb-10 mt-[-100px] flex flex-col justify-between gap-7 lg:mt-20 lg:flex-row lg:gap-0">
+              <div className="text-4xl font-semibold lg:w-[45%] ">
+                Get the skills you need for a{" "}
+                <Highlighted text={"job that is in demand."} />
+              </div>
+              <div className="flex flex-col items-start gap-10 lg:w-[40%]">
+                <div className="text-[16px]">
+                  The modern StudyNotion is the dictates its own terms. Today,
+                  to be a competitive specialist requires more than professional
+                  skills.
+                </div>
+                <CTAbutton
+                  active={true}
+                  linkto={"/signup"}
+                >
+                  <div className="">Learn More</div>
+                </CTAbutton>
+              </div>
+            </div>
+
+            {/* Timeline Section - Section 2 */}
+            <TimelineSection />
+
+            {/* Learning Language Section - Section 3 */}
+            <Learning />
+          </div>
+        </div>
+
+        {/* section 4 become an instuctore  */}
+        <BecomeInstuctore />
       </div>
     </div>
   );

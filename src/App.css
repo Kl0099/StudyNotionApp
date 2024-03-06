@@ -103,7 +103,9 @@ details > summary::-webkit-details-marker {
   background: url("../src/assets/Images/bghome.svg");
   /* background-size: contain; */
 }
-
+.bG_img {
+  background: url("./assets/Images/bghome.svg");
+}
 @keyframes spinner-bulqg1 {
   0% {
     clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
