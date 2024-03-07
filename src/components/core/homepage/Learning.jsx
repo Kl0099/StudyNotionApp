@@ -21,18 +21,18 @@ const Learning = () => {
           </p>
         </div>
 
-        <div className="flex ">
+        <div className="flex sm:flex-row flex-col">
           <img
             src={ProgressKnow}
-            className=" object-contain  -mr-32"
+            className=" w-[341px] h-[340px] object-contain  -mr-32"
           />
           <img
             src={compare_other}
-            className=" object-contain"
+            className="w-[341px] h-[340px] object-contain"
           />
           <img
             src={plan_lesson}
-            className=" object-contain -ml-44"
+            className="w-[341px] h-[340px] object-contain sm:-ml-44"
           />
         </div>
         <CTButton

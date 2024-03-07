@@ -11,6 +11,7 @@ import TimeLineSection from "../components/core/homepage/TimeLineSection.jsx";
 import Learning from "../components/core/homepage/Learning.jsx";
 import TimelineSection from "../components/core/homepage/TimeLineSection.jsx";
 import BecomeInstuctore from "../components/core/homepage/BecomeInstuctore.jsx";
+import ExploreMore from "../components/core/homepage/ExploreMore.jsx";
 
 const Home = () => {
   return (
@@ -126,11 +127,15 @@ const Home = () => {
             backgroundGradient={<div className="codeblock2 absolute"></div>}
           />
         </div>
+        <div className=" mx-auto max-w-maxContent flex flex-col gap-7">
+          <ExploreMore />
+        </div>
 
         {/* cod esection 3  */}
-        <div className=" bg-pure-greys-5 text-richblack-700  max-w-maxContent">
-          <div className="homepage_bg h-[333px] ">
-            <div className="h-[100px]"></div>
+        <div className=" bg-pure-greys-5 text-richblack-700 w-[100vw]">
+          <div className="homepage_bg h-[270px] ">
+            <div className="h-[140px]"></div>
+
             <div className=" w-11/12 max-w-maxContent flex item-center justify-center gap-5 mx-auto">
               <div className="flex sm:flex-row gap-7 text-white">
                 <CTAbutton
@@ -185,6 +190,10 @@ const Home = () => {
 
         {/* section 4 become an instuctore  */}
         <BecomeInstuctore />
+        <div>
+          <h2 className="text-3xl">Reviwes from other learners</h2>
+          <div className="h-[150px]"></div>
+        </div>
       </div>
     </div>
   );
