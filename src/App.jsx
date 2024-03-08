@@ -4,9 +4,9 @@ import Home from "./pages/Home";
 import Navbar from "./components/common/Navbar";
 import Footer from "./components/common/Footer";
 import Login from "./pages/Login";
-import AboutUs from "./pages/AboutUs";
+import About from "./pages/About";
 import Register from "./pages/Register";
-import ContactUs from "./pages/ContactUs";
+import Contact from "./pages/Contact";
 import { useLocation } from "react-router-dom";
 
 function App() {
@@ -30,11 +30,11 @@ function App() {
         />
         <Route
           path="/aboutus"
-          element={<AboutUs />}
+          element={<About />}
         />
         <Route
           path="/contactus"
-          element={<ContactUs />}
+          element={<Contact />}
         />
       </Routes>
       {location.pathname !== "/register" && location.pathname !== "/login" && (
