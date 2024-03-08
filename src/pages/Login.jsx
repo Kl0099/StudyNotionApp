@@ -14,7 +14,7 @@ const Login = () => {
     // setVisiblePassword(e.target.value);
   };
   return (
-    <div className=" flex flex-col items-center justify-center h-[90vh]  ">
+    <div className=" flex flex-col items-center justify-center h-[90vh] ">
       <div className="shadow-richblack-500  shadow-sm   flex  flex-col gap-8 text-white p-4 sm:w-[60%] lg:w-[30%]  md:w-[40%] ">
         <div className="flex flex-col">
           <h1 className=" text-3xl mb-3">Welcome Back</h1>
@@ -44,9 +44,9 @@ const Login = () => {
               <label
                 htmlFor="email"
                 id="email"
-                className=" text-sm"
+                className=" text-[12px]"
               >
-                Email Address
+                Email Address <sup className=" text-pink-100">*</sup>
               </label>
               <input
                 type="email"
@@ -54,15 +54,16 @@ const Login = () => {
                 id="email"
                 placeholder="Enter email address"
                 className=" bg-richblack-800 p-2 rounded-md w-full"
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="relative flex flex-col items-start mt-5 gap-2">
               <label
                 htmlFor="password"
                 id="password"
-                className=" text-sm "
+                className=" text-[12px] "
               >
-                Password
+                Password <sup className=" text-pink-100">*</sup>
               </label>
               <div className=" w-full">
                 <input
@@ -86,7 +87,7 @@ const Login = () => {
                 </div>
               </div>
             </div>
-            <p className=" cursor-pointe  text-right text-sm text-richblue-300 mt-2">
+            <p className=" cursor-pointer  text-right text-sm text-richblue-300 mt-2">
               forgot password
             </p>
             <div className=" w-full mt-8">
