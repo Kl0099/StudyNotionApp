@@ -7,6 +7,9 @@ html,
 body {
   overflow-x: hidden;
 }
+.active {
+  color: yellow !important;
+}
 
 /* ===== Scrollbar CSS ===== */
 /* Firefox */
