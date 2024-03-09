@@ -25,7 +25,7 @@ const Register = () => {
     setConfirmPassword(e.target.value);
   };
   return (
-    <div className=" flex flex-col items-center justify-center   ">
+    <div className=" flex flex-col items-center justify-center mt-6  ">
       <div className="shadow-richblack-500  shadow-sm   flex  flex-col gap-8 text-white p-4 sm:w-[60%] lg:w-[30%]  md:w-[40%] ">
         <div className="flex flex-col">
           <h1 className=" text-3xl mb-3">Welcome Back</h1>

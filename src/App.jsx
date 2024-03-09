@@ -25,7 +25,7 @@ function App() {
           element={<Login />}
         />
         <Route
-          path="/register"
+          path="/signup"
           element={<Register />}
         />
         <Route
@@ -37,7 +37,7 @@ function App() {
           element={<Contact />}
         />
       </Routes>
-      {location.pathname !== "/register" && location.pathname !== "/login" && (
+      {location.pathname !== "/signup" && location.pathname !== "/login" && (
         <Footer />
       )}
     </main>
