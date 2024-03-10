@@ -12,6 +12,7 @@ exports.auth = async (req, res, next) => {
       req.cookies.token ||
       req.body.token ||
       req.header("Authorisation").replace("Bearer ", "");
+    // console.log("auth : ", token);
 
     if (!token) {
       return res.status(400).json({
@@ -25,6 +26,7 @@ exports.auth = async (req, res, next) => {
       // console.log("decoded : ", decode);
       req.user = decode;
     } catch (error) {
+      console.log(error);
       return res.status(401).json({
         success: false,
         message: "Invalid token",

@@ -1,9 +1,15 @@
-import React, { useState } from "react";
 import CTAButton from "../components/core/homepage/Button";
+import Highlighted from "../components/core/homepage/Highlighted";
+import { login } from "../services/operations/authapi";
+import React, { useState } from "react";
 import { FaRegEye as OpenEye } from "react-icons/fa";
 import { FaRegEyeSlash as CloseEye } from "react-icons/fa";
-import Highlighted from "../components/core/homepage/Highlighted";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const accounts = ["Student", "Instructors"];
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,6 +18,10 @@ const Login = () => {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
     // setVisiblePassword(e.target.value);
+  };
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    dispatch(login(email, password, navigate));
   };
   return (
     <div className=" flex flex-col items-center justify-center h-[90vh] ">
@@ -39,7 +49,10 @@ const Login = () => {
           ))}
         </div>
         <div className="flex flex-col items-center">
-          <form className="  w-full ">
+          <form
+            className="  w-full "
+            onSubmit={handleFormSubmit}
+          >
             <div className="flex flex-col items-start gap-2">
               <label
                 htmlFor="email"
@@ -87,12 +100,18 @@ const Login = () => {
                 </div>
               </div>
             </div>
-            <p className=" cursor-pointer  text-right text-sm text-richblue-300 mt-2">
+            <p
+              onClick={() => navigate("/forgot-password")}
+              className=" cursor-pointer  text-right text-sm text-richblue-300 mt-2"
+            >
               forgot password
             </p>
-            <div className=" w-full mt-8">
-              <CTAButton active={true}>Sign in</CTAButton>
-            </div>
+            <button
+              type="submit"
+              className=" hover:scale-95 w-full mt-6 rounded-[8px] bg-yellow-50 py-[8px] px-[12px] font-medium text-richblack-900"
+            >
+              Sign In
+            </button>
           </form>
         </div>
       </div>

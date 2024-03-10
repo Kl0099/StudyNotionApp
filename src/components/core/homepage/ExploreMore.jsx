@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import Highlighted from "./Highlighted";
 import { HomePageExplore } from "../../../data/homepage-explore";
 import CourseCard from "./CourseCard";
+import Highlighted from "./Highlighted";
+import React, { useState } from "react";
+import "../../../App.css";
 
 const tabNames = [
   "Free",
@@ -34,15 +35,15 @@ const ExploreMore = () => {
         </p>
       </div>
       <div className="sm:h-[40px]"></div>
-      <div className=" flex flex-col justify-center items-center gap-5">
+      <div className="  flex flex-col justify-center items-center gap-5">
         {/* tabs */}
-        <div className=" shadow-sm shadow-white flex sm:ml-4 sm:w-fit  items-center justify-center bg-richblack-700 rounded-3xl ">
+        <div className=" hidden sm:visible sm:shadow-sm sm:shadow-white sm:flex sm:ml-4 p-2  sm:items-center sm:justify-center bg-richblack-700 rounded-3xl ">
           {tabNames.map((item, index) => {
             return (
               <div
-                className={` text-[14px] sm:text-base ${
+                className={`  text-[14px] sm:text-base ${
                   currentTab === item ? "bg-richblack-900 text-white " : null
-                } sm:p-2 rounded-full sm:px-4 text-richblack-300 transition-all duration-200 cursor-pointer hover:scale-90 hover:bg-richblack-900 hover:text-white px-2`}
+                } sm:p-2 rounded-full sm:px-4 text-richblack-300 transition-all duration-200 cursor-pointer hover:scale-90 hover:bg-richblack-900 hover:text-white px-2 `}
                 key={index}
                 onClick={() => setMyCard(item)}
               >
@@ -53,7 +54,7 @@ const ExploreMore = () => {
         </div>
         <div className=" sm:h-[60px]"></div>
         {/* card  */}
-        <div className="  flex gap-4">
+        <div className=" sm:flex-row flex-col gap-7 flex sm:gap-4">
           {courses.map((item, index) => {
             return (
               <CourseCard
@@ -62,6 +63,8 @@ const ExploreMore = () => {
                 description={item.description}
                 level={item.level}
                 lessons={item.lessionNumber}
+                setCurrentCard={setCurrentCard}
+                currentCard={currentCard}
               />
             );
           })}

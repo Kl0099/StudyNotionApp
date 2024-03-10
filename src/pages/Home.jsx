@@ -1,17 +1,18 @@
+import CTAbutton from "../components/core/homepage/Button";
+import CodeBlocks from "../components/core/homepage/CodeBlocks.jsx";
+import Highlighted from "../components/core/homepage/Highlighted";
 import React from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import Highlighted from "../components/core/homepage/Highlighted";
-import CTAbutton from "../components/core/homepage/Button";
-import CodeBlocks from "../components/core/homepage/CodeBlocks.jsx";
 import "../App.css";
 // Image and Video Import
 import Banner from "../assets/Images/banner.mp4";
-import TimeLineSection from "../components/core/homepage/TimeLineSection.jsx";
-import Learning from "../components/core/homepage/Learning.jsx";
-import TimelineSection from "../components/core/homepage/TimeLineSection.jsx";
+import Footer from "../components/common/Footer.jsx";
 import BecomeInstuctore from "../components/core/homepage/BecomeInstuctore.jsx";
 import ExploreMore from "../components/core/homepage/ExploreMore.jsx";
+import Learning from "../components/core/homepage/Learning.jsx";
+import TimeLineSection from "../components/core/homepage/TimeLineSection.jsx";
+import TimelineSection from "../components/core/homepage/TimeLineSection.jsx";
 
 const Home = () => {
   return (
@@ -136,14 +137,14 @@ const Home = () => {
           <div className="homepage_bg h-[270px] ">
             <div className="h-[140px]"></div>
 
-            <div className=" w-11/12 max-w-maxContent flex item-center justify-center gap-5 mx-auto">
+            <div className="  w-11/12 max-w-maxContent flex item-center justify-center gap-5 mx-auto">
               <div className="flex sm:flex-row gap-7 text-white">
                 <CTAbutton
                   linkto={"/signup "}
                   active={true}
                 >
                   {" "}
-                  <div className="flex gap-3 items-center ">
+                  <div className=" flex gap-3 items-center ">
                     Explore full Catalog
                     <FaArrowRightLong />
                   </div>{" "}
@@ -158,7 +159,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 ">
+          <div className=" mt-10 mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 ">
             {/* Job that is in Demand - Section 1 */}
             <div className="mb-10 mt-[-100px] flex flex-col justify-between gap-7 lg:mt-20 lg:flex-row lg:gap-0">
               <div className="text-4xl font-semibold lg:w-[45%] ">
@@ -195,6 +196,7 @@ const Home = () => {
           <div className="h-[150px]"></div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

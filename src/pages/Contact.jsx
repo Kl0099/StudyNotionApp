@@ -1,9 +1,9 @@
-import React from "react";
-
+import Footer from "../components/common/Footer";
 // import Footer from "../components/Common/Footer"
 // import ReviewSlider from "../components/Common/ReviewSlider"
 import ContactDetails from "../components/core/ContactUsPage/ContactDetails";
 import ContactForm from "../components/core/ContactUsPage/ContactForm";
+import React from "react";
 
 const Contact = () => {
   return (
@@ -25,6 +25,7 @@ const Contact = () => {
           Reviews from other learners
         </h1>
       </div>
+      <Footer />
     </div>
   );
 };

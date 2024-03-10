@@ -59,8 +59,10 @@ const Navbar = () => {
     fetchSubLinks();
   }, []);
   useEffect(() => {
-    console.log(subLinks);
-  }, [subLinks]);
+    // console.log(subLinks);
+    // console.log("toen", token);
+    // console.log(" user", user);
+  }, [subLinks, token, user]);
   const matchRoute = (route) => {
     return matchPath({ path: route }, location.pathname);
   };
