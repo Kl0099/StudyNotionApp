@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import UpdatePassword from "./pages/UpdatePassword";
+import VerifyEmail from "./pages/VerifyEmail";
 import { getUser } from "./services/operations/profileapi";
 import { useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
@@ -51,6 +52,11 @@ function App() {
           path="/signup"
           element={<Register />}
         />
+        <Route
+          path="/verify-email"
+          element={<VerifyEmail />}
+        />
+
         <Route
           path="/aboutus"
           element={<About />}

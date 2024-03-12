@@ -48,7 +48,7 @@ export const logout = (navigate) => {
 export const signup = (
   accoutType,
   firstName,
-  lastname,
+  lastName,
   email,
   password,
   confirmPassword,
@@ -62,7 +62,7 @@ export const signup = (
       const response = await apiConnector("POST", authApis.SIGNUP_API, {
         accoutType,
         firstName,
-        lastname,
+        lastName,
         email,
         password,
         confirmPassword,
@@ -75,9 +75,32 @@ export const signup = (
       toast.success("Signup successful");
       navigate("/login");
     } catch (error) {
-      console.log("error while dispatch signup : ", error.message);
+      console.log("error while dispatch signup : ", error);
       toast.error("Signup failed");
       navigate("/signup");
+    }
+    dispatch(setLoading(false));
+    toast.dismiss(toastId);
+  };
+};
+
+export const sendotp = (email, navigate) => {
+  return async (dispatch) => {
+    const toastId = toast.loading("Loading...");
+    dispatch(setLoading(true));
+    try {
+      const response = await apiConnector("POST", authApis.SEND_OTP_API, {
+        email,
+        checkUserPresent: true,
+      });
+      if (!response.data.success) {
+        throw new Error(response.data.message);
+      }
+      toast.success("Otp sent successfully");
+      navigate("/verify-email");
+    } catch (error) {
+      console.log("error while dispatch send otp :", error);
+      toast.error("Could not send otp");
     }
     dispatch(setLoading(false));
     toast.dismiss(toastId);

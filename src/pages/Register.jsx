@@ -1,16 +1,23 @@
-import React, { useState } from "react";
 import CTAButton from "../components/core/homepage/Button";
+import Highlighted from "../components/core/homepage/Highlighted";
+import { sendotp } from "../services/operations/authapi";
+import { setSignupData } from "../slices/auth";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { FaRegEye as OpenEye } from "react-icons/fa";
 import { FaRegEyeSlash as CloseEye } from "react-icons/fa";
-import Highlighted from "../components/core/homepage/Highlighted";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 const Register = () => {
-  const accounts = ["Student", "Instructors"];
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const accounts = ["Student", "Instructor"];
   const [email, setEmail] = useState("");
   const [fistname, setfistname] = useState("");
-  const [lastname, setlastname] = useState("");
+  const [lastName, setlastname] = useState("");
 
   const [password, setPassword] = useState("");
-  const [number, setNumber] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
   const [visiblepassword, setVisiblePassword] = useState(false);
   const [confirmvisiblepassword, setConfirmVisiblePassword] = useState(false);
@@ -20,9 +27,28 @@ const Register = () => {
     setPassword(e.target.value);
     // setVisiblePassword(e.target.value);
   };
+
   const handleconfirmPasswordChange = (e) => {
     e.preventDefault();
     setConfirmPassword(e.target.value);
+  };
+  const handleformSubmit = (e) => {
+    e.preventDefault();
+    if (password !== confirmpassword) {
+      toast.error("Passwords Do Not Match");
+      return;
+    }
+    dispatch(
+      setSignupData({
+        accountType,
+        fistname,
+        lastName,
+        email,
+        password,
+        confirmpassword,
+      })
+    );
+    dispatch(sendotp(email, navigate));
   };
   return (
     <div className=" flex flex-col items-center justify-center mt-6  ">
@@ -50,7 +76,10 @@ const Register = () => {
           ))}
         </div>
         <div className="flex flex-col items-center">
-          <form className="  w-full ">
+          <form
+            onSubmit={handleformSubmit}
+            className="  w-full "
+          >
             <div className="flex gap-2 justify-between mb-4 mt-4">
               <div className="flex flex-col items-start gap-2">
                 <label
@@ -105,23 +134,7 @@ const Register = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <div className=" my-4 flex flex-col items-start gap-2">
-              <label
-                htmlFor="number"
-                id="number"
-                className="  text-[12px]"
-              >
-                Phone Number <sup className=" text-pink-100">*</sup>
-              </label>
-              <input
-                type="text"
-                name="number"
-                id="number"
-                placeholder="Enter phone number"
-                className=" bg-richblack-800 p-2 rounded-md w-full"
-                onChange={(e) => setNumber(e.target.value)}
-              />
-            </div>
+
             <div className=" flex flex-col md:flex-row  justify-between">
               <div className="relative flex flex-col items-start mt-5 gap-2">
                 <label
@@ -187,9 +200,12 @@ const Register = () => {
               </div>
             </div>
 
-            <div className=" w-full mt-8">
-              <CTAButton active={true}>Create Account</CTAButton>
-            </div>
+            <button
+              type="submit"
+              className=" hover:scale-95 w-full mt-6 rounded-[8px] bg-yellow-50 py-[8px] px-[12px] font-medium text-richblack-900"
+            >
+              Create Accout
+            </button>
           </form>
         </div>
       </div>

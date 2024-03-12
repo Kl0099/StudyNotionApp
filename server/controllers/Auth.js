@@ -65,23 +65,30 @@ exports.signUp = async (req, res) => {
   //data fetching
   try {
     const {
+      accoutType,
       firstName,
       lastName,
       email,
       password,
       confirmPassword,
-      accountType,
-      contactNumber,
       otp,
     } = req.body;
+    console.log(
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+      accoutType,
+      otp
+    );
     if (
       !firstName ||
       !lastName ||
       !email ||
       !password ||
       !confirmPassword ||
-      !accountType ||
-      !contactNumber ||
+      !accoutType ||
       !otp
     ) {
       return res.status(403).json({
@@ -141,10 +148,8 @@ exports.signUp = async (req, res) => {
       firstName,
       lastName,
       email,
-      password,
-      contactNumber,
       password: hashPassword,
-      accountType,
+      accountType: accoutType,
       additionalDetails: profileDetails._id,
       image: {
         public_id: null,
