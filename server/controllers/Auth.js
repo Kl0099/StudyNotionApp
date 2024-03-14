@@ -73,15 +73,15 @@ exports.signUp = async (req, res) => {
       confirmPassword,
       otp,
     } = req.body;
-    console.log(
-      firstName,
-      lastName,
-      email,
-      password,
-      confirmPassword,
-      accoutType,
-      otp
-    );
+    // console.log(
+    //   firstName,
+    //   lastName,
+    //   email,
+    //   password,
+    //   confirmPassword,
+    //   accoutType,
+    //   otp
+    // );
     if (
       !firstName ||
       !lastName ||

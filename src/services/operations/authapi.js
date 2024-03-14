@@ -24,7 +24,7 @@ export const login = (email, password, navigate) => {
         : `https://api.dicebear.com/5.x/initials/svg?seed=${result.data.user.firstName} ${result.data.user.lastName}`;
       dispatch(setUser({ ...result.data.user, image: userImage }));
       localStorage.setItem("token", JSON.stringify(result.data.token));
-      navigate("/");
+      navigate("/dashboard/my-profile");
     } catch (error) {
       console.log("login error when dispatch login : ", error.message);
       toast.error("Login Failed Try again");

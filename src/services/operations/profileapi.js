@@ -18,6 +18,7 @@ export const getUser = (token, navigate) => {
           Authorization: `Bearer ${token}`,
         }
       );
+      console.log("getuser : ", response.data.user);
       if (!response.data.success) {
         throw new Error(response.data.message);
       }
