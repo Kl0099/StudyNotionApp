@@ -33,6 +33,7 @@ const Register = () => {
     setConfirmPassword(e.target.value);
   };
   const handleformSubmit = (e) => {
+    console.log(password, confirmpassword);
     e.preventDefault();
     if (password !== confirmpassword) {
       toast.error("Passwords Do Not Match");

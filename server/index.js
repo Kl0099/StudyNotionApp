@@ -23,6 +23,7 @@ app.use(
   cors({
     origin: "http://localhost:3000",
     credentials: true,
+    allowedHeaders: ["Authorization", "Content-Type"],
   })
 );
 // app.use()
@@ -30,7 +31,7 @@ app.use(
   fileUpload({
     useTempFiles: true,
     tempFileDir: "/tmp/",
-    debug: true,
+    // debug: true,
     // limits: { fileSize: 50 * 1024 * 1024 },
   })
 );

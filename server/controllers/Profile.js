@@ -4,12 +4,12 @@ const Profile = require("../models/Profile");
 const mongoose = require("mongoose");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 const cloudinary = require("cloudinary");
-
+const CourseProgress = require("../models/CourseProgress");
 exports.updateProfile = async (req, res) => {
   try {
     const { dateOfBirth = "", about = "", contactNumber, gender } = req.body;
     const id = req.user.id;
-    console.log(id);
+    // console.log(id);
     if (!gender || !id) {
       return res.status(404).json({
         success: false,
@@ -24,10 +24,11 @@ exports.updateProfile = async (req, res) => {
     profieDetails.dateOfBirth = dateOfBirth;
     profieDetails.contactNumber = contactNumber;
     await profieDetails.save();
+    user.save();
     res.status(200).json({
       success: true,
       message: "Profile updated successfully",
-      profieDetails,
+      user,
     });
   } catch (error) {
     console.log("Error while updating profile : ", error);
@@ -41,6 +42,7 @@ exports.updateProfile = async (req, res) => {
 exports.deleteAccount = async (req, res) => {
   try {
     const id = req.user.id;
+    console.log(id);
     const user = await User.findById(id);
     if (!user) {
       return res.status(400).json({
@@ -68,13 +70,13 @@ exports.deleteAccount = async (req, res) => {
       );
     }
     await User.findByIdAndDelete({ _id: id });
-
+    await CourseProgress.deleteMany({ userId: id });
     res.status(200).json({
       success: true,
       message: "Profile deleted successfully",
     });
   } catch (error) {
-    console.log("Error while deleting profile : ", error);
+    console.log("Error while deleting profile : ", error.message);
     res.status(500).json({
       success: false,
       message: error.message,

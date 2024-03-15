@@ -1,17 +1,23 @@
+import { getUser } from "../../services/operations/profileapi";
 import { formattedDate } from "../../utils/dateFormatter";
 import React, { useEffect } from "react";
 import { VscEdit } from "react-icons/vsc";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const MyProfile = () => {
   const { user } = useSelector((state) => state.profile);
+  const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   // useEffect(() => {
   //   if (user) {
   //     console.log("user : ", user);
   //   }
   // });
+  useEffect(() => {
+    dispatch(getUser(token, navigate("/dashboard/my-profile")));
+  }, []);
   return (
     <div>
       <h1 className="mb-14 text-3xl font-medium text-richblack-5">

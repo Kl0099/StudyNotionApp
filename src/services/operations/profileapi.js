@@ -18,7 +18,7 @@ export const getUser = (token, navigate) => {
           Authorization: `Bearer ${token}`,
         }
       );
-      console.log("getuser : ", response.data.user);
+      // console.log("getuser : ", response.data.user);
       if (!response.data.success) {
         throw new Error(response.data.message);
       }
@@ -57,6 +57,66 @@ export const updateProfilePic = (token, avatar) => {
     } catch (error) {
       console.log("error while dispatching profile pic update", error);
       toast.error("Error while updating profile");
+      setLoading(false);
+    }
+    toast.dismiss(toastid);
+  };
+};
+
+export const updateProfile = (token, data, navigate) => {
+  return async (dispatch) => {
+    const toastId = toast.loading("Loading...");
+    setLoading(true);
+    try {
+      const { about, contactNumber, dateOfBirth, gender } = data;
+      const response = await apiConnector(
+        "PUT",
+        profileApis.UPDATE_PROFILE_API_URL,
+        { dateOfBirth, about, contactNumber, gender },
+        {
+          Authorization: `Bearer ${token}`,
+        }
+      );
+      if (!response.data.success) {
+        throw new Error(response.data.message);
+      }
+      toast.success("profile updated successfully");
+      // setUser(response.data.profileDetails)
+      dispatch(setUser(response.data.user));
+      navigate("/dashboard/my-profile");
+    } catch (error) {
+      console.log("error while dispatching profile update", error);
+      toast.error("Error while updating profile");
+    }
+    setLoading(false);
+    toast.dismiss(toastId);
+  };
+};
+
+export const deleteProfile = (token, navigate) => {
+  return async (dispatch) => {
+    setLoading(true);
+    const toastid = toast.loading("Loading...");
+    try {
+      const response = await apiConnector(
+        "DELETE",
+        profileApis.DELETE_ACC_API,
+        null,
+        {
+          Authorization: `Bearer ${token}`,
+        }
+      );
+      // console.log(response);
+      if (!response.data.success) {
+        throw new Error(response.data.message);
+      }
+      toast.success("Profile deleted successfully");
+      // dispatch(setUser(response.data.data));
+      dispatch(logout(navigate));
+      setLoading(false);
+    } catch (error) {
+      console.log("error while dispatching delete profile", error);
+      toast.error("Error while deleting profile");
       setLoading(false);
     }
     toast.dismiss(toastid);
