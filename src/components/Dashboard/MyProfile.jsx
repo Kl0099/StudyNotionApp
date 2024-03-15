@@ -7,11 +7,11 @@ import { useNavigate } from "react-router-dom";
 const MyProfile = () => {
   const { user } = useSelector((state) => state.profile);
   const navigate = useNavigate();
-  useEffect(() => {
-    if (user) {
-      console.log("user : ", user);
-    }
-  });
+  // useEffect(() => {
+  //   if (user) {
+  //     console.log("user : ", user);
+  //   }
+  // });
   return (
     <div>
       <h1 className="mb-14 text-3xl font-medium text-richblack-5">

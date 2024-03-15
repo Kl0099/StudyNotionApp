@@ -36,3 +36,29 @@ export const getUser = (token, navigate) => {
     dispatch(setLoading(false));
   };
 };
+
+export const updateProfilePic = (token, avatar) => {
+  return async (dispatch) => {
+    setLoading(true);
+    const toastid = toast.loading("Loading...");
+    try {
+      const response = await apiConnector(
+        "POST",
+        profileApis.UPDATE_PROFILE_PIC_API_URL,
+        { avatar }
+      );
+      // console.log(response);
+      if (!response.data.success) {
+        throw new Error(response.data.message);
+      }
+      toast.success("Profile Update successfully");
+      dispatch(setUser(response.data.data));
+      setLoading(false);
+    } catch (error) {
+      console.log("error while dispatching profile pic update", error);
+      toast.error("Error while updating profile");
+      setLoading(false);
+    }
+    toast.dismiss(toastid);
+  };
+};

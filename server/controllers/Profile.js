@@ -3,6 +3,7 @@ const Course = require("../models/Course");
 const Profile = require("../models/Profile");
 const mongoose = require("mongoose");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
+const cloudinary = require("cloudinary");
 
 exports.updateProfile = async (req, res) => {
   try {
@@ -100,27 +101,45 @@ exports.getAllUserDetails = async (req, res) => {
     });
   }
 };
+
 exports.updateProfilePic = async (req, res) => {
   try {
-    const { image } = req.files.image;
-    console.log(image);
+    // const displayPicture = req.files.displayPicture;
+    const { avatar } = req.body;
     const userId = req.user.id;
-    const user = await User.findById(userId);
-    console.log(user);
-    if (!user)
-      return res.status(404).json({
-        success: false,
-        message: "user not found",
-      });
-    const response = uploadImageToCloudinary(
-      image,
-      process.env.FOLDER_NAME,
-      1000,
-      1000
+    // console.log(avatar);
+    // const image = await uploadImageToCloudinary(
+    //   avatar,
+    //   process.env.FOLDER_NAME,
+    //   1000,
+    //   1000
+    // );
+    const cloud = await cloudinary.v2.uploader.upload(
+      avatar,
+      {
+        folder: process.env.FOLDER_NAME,
+      },
+      (err, result) => {
+        if (err)
+          return res.status(500).json({
+            success: false,
+            message: err.message,
+          });
+      }
     );
-    console.log(response);
+    // console.log(image);
+    // console.log("cloud image", cloud);
+    const updatedProfile = await User.findByIdAndUpdate(
+      { _id: userId },
+      { image: cloud.secure_url },
+      { new: true }
+    );
+    res.send({
+      success: true,
+      message: `Image Updated successfully`,
+      data: updatedProfile,
+    });
   } catch (error) {
-    console.log("error while updatong profile pic : ", error.message);
     return res.status(500).json({
       success: false,
       message: error.message,

@@ -23,7 +23,7 @@ const ProfileDropDown = () => {
     >
       <div className="flex items-center gap-x-1">
         <img
-          src={user?.image?.url}
+          src={user?.image?.url || user?.image}
           alt={`profile-${user?.firstName}`}
           className="aspect-square w-[30px] rounded-full object-cover"
         />

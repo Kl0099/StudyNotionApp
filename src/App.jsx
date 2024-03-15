@@ -3,6 +3,7 @@ import "./App.css";
 import EnrolledCourses from "./components/Dashboard/EnrolledCourses";
 import MyProfile from "./components/Dashboard/MyProfile";
 import Settings from "./components/Dashboard/Settings/index";
+import PrivateRoute from "./components/auth/PrivateRoute";
 import Footer from "./components/common/Footer";
 import Navbar from "./components/common/Navbar";
 import { accountType } from "./data/constants";
@@ -74,7 +75,13 @@ function App() {
           element={<Contact />}
         />
 
-        <Route element={<Dashboard />}>
+        <Route
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        >
           <Route
             path="/dashboard/my-profile"
             element={<MyProfile />}
