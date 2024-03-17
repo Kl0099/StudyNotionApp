@@ -19,6 +19,6 @@ router.post(
   // upload.single("avatar"),
   updateProfilePic
 );
-router.delete("/deleteaccount", deleteAccount);
+router.delete("/deleteaccount", auth, deleteAccount);
 router.get("/getallusersdetails", auth, getAllUserDetails);
 module.exports = router;

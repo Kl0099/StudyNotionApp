@@ -8,7 +8,7 @@ const {
 const router = express.Router();
 
 router.post("/createCourse", auth, isInstructor, createCourse);
-router.get("/allcourse", getAllCourse);
-router.get("/allcoursedetails", getCourseDetails);
+router.get("/getallcourse", getAllCourse);
+router.get("/getcoursedetails", getCourseDetails);
 
 module.exports = router;

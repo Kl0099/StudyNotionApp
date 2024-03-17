@@ -1,8 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 import EnrolledCourses from "./components/Dashboard/EnrolledCourses";
+import MyCourses from "./components/Dashboard/MyCourses";
 import MyProfile from "./components/Dashboard/MyProfile";
 import Settings from "./components/Dashboard/Settings/index";
+import AddCourses from "./components/Dashboard/addCourses";
+import Cart from "./components/Dashboard/cart";
 import PrivateRoute from "./components/auth/PrivateRoute";
 import Footer from "./components/common/Footer";
 import Navbar from "./components/common/Navbar";
@@ -86,6 +89,10 @@ function App() {
             path="/dashboard/my-profile"
             element={<MyProfile />}
           />
+          <Route
+            path="/dashboard/settings"
+            element={<Settings />}
+          />
           {user?.accountType === ACCOUNT_TYPE.STUDENT && (
             <>
               <Route
@@ -93,8 +100,21 @@ function App() {
                 element={<EnrolledCourses />}
               />
               <Route
-                path="/dashboard/settings"
-                element={<Settings />}
+                path="/dashboard/cart"
+                element={<Cart />}
+              />
+            </>
+          )}
+          {/* instructore  */}
+          {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
+            <>
+              <Route
+                path="/dashboard/add-course"
+                element={<AddCourses />}
+              />
+              <Route
+                path="/dashboard/my-courses"
+                element={<MyCourses />}
               />
             </>
           )}

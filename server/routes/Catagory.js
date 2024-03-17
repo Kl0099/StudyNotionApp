@@ -8,7 +8,7 @@ const {
 const router = express.Router();
 
 router.post("/createcatagory", auth, isAdmin, createCategory);
-router.get("/allcatagory", showAllCategory);
+router.get("/showAllCategories", showAllCategory);
 router.post("/catagorypagedetails", catagoryPageDetails);
 
 module.exports = router;
