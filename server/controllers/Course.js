@@ -3,6 +3,7 @@ const Category = require("../models/Category");
 const User = require("../models/User");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 
+const cloudinary = require("cloudinary");
 //createcourse
 exports.createCourse = async (req, res) => {
   try {
@@ -14,8 +15,18 @@ exports.createCourse = async (req, res) => {
       price,
       category,
       tag,
+      thumbnailImage,
     } = req.body;
-    const thumbnail = req.files.thumbnailImage;
+    // console.log(
+    //   courseName,
+    //   courseDescription,
+    //   whatYouWillLearn,
+    //   price,
+    //   category,
+    //   tag,
+    //   thumbnailImage
+    // );
+    // const thumbnail = req.files.thumbnailImage;
 
     if (
       !courseName ||
@@ -51,9 +62,18 @@ exports.createCourse = async (req, res) => {
 
     //upload image in cloudinary
 
-    const thumbnailImage = await uploadImageToCloudinary(
-      thumbnail,
-      process.env.FOLDER_NAME
+    const cloud = await cloudinary.v2.uploader.upload(
+      thumbnailImage,
+      {
+        folder: process.env.FOLDER_NAME,
+      },
+      (err, result) => {
+        if (err)
+          return res.status(500).json({
+            success: false,
+            message: err.message,
+          });
+      }
     );
 
     //create course
@@ -64,7 +84,7 @@ exports.createCourse = async (req, res) => {
       instructor: instructorDetails._id,
       price: price,
       category: categoryDetails._id,
-      thumbnail: thumbnailImage.secure_url,
+      thumbnail: cloud.secure_url,
     });
 
     //add new course to the userSchema

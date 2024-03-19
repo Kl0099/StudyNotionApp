@@ -1,10 +1,16 @@
-import { fetchCourseCategories } from "../../../../services/operations/courseDetails";
-import { setStep } from "../../../../slices/course";
+import {
+  addCourseDetails,
+  editCourseDetails,
+  fetchCourseCategories,
+} from "../../../../services/operations/courseDetails";
+import { setCourse, setStep } from "../../../../slices/course";
+import { COURSE_STATUS } from "../../../../utils/constants";
 import IconBtn from "../../../common/IconBtn";
 import ChipInput from "./ChipInput";
 import RequirementsField from "./RequirementsField";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { HiOutlineCurrencyRupee } from "react-icons/hi";
 import { MdNavigateNext } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,6 +30,103 @@ const CourseInformationForm = () => {
   const [fileImage, setFileImage] = useState("");
   const [avatar, setAvatar] = useState("");
   const [courseCategory, setCourseCategory] = useState([]);
+  /**
+   * onhandlesubmit form submitions
+   */
+  const onhandlesubmit = async (data) => {
+    console.log(data);
+    // e.preventDefault();
+    // console.log("onhandlesubmit");
+    // isFormUpdated();
+    if (editCourse) {
+      if (isFormUpdated()) {
+        const currentValue = getValues();
+        const formData = new FormData();
+        formData.append("courseId", course._id);
+        if (currentValue.courseTitle !== course.courseName) {
+          formData.append("CourseName", data.courseTitle);
+        }
+        if (currentValue.courseShortDesc !== course.courseDescription) {
+          formData.append("courseDescription", data.courseShortDesc);
+        }
+        if (currentValue.coursePrice !== course.price) {
+          formData.append("price", data.coursePrice);
+        }
+        if (currentValue.courseTags.toString() !== course.tags.toString()) {
+          formData.append("tag", JSON.stringify(data.courseTags));
+        }
+        if (currentValue.courseBenefits !== course.whatYouWillLearn) {
+          formData.append("whatYouWillLearn", data.courseBenefits);
+        }
+        if (currentValue.courseCategory._id !== course.category._id) {
+          formData.append("category", data.courseCategory);
+        }
+        if (
+          currentValue.courseRequirements.toString() !==
+          course.instructions.toString()
+        ) {
+          formData.append(
+            "instructions",
+            JSON.stringify(data.courseRequirements)
+          );
+        }
+        if (currentValue.courseImage !== course.thumbnail) {
+          formData.append("thumbnailImage", data.courseImage);
+        }
+        setLoading(true);
+        const result = await editCourseDetails(formData, token);
+        setLoading(false);
+        if (result) {
+          dispatch(setStep(2));
+          dispatch(setCourse(result));
+        }
+      } else {
+        toast.error("No changes made to the form");
+      }
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("courseName", data.courseTitle);
+    formData.append("courseDescription", data.courseShortDesc);
+    formData.append("price", data.coursePrice);
+    formData.append("tag", JSON.stringify(data.courseTags));
+    formData.append("whatYouWillLearn", data.courseBenefits);
+    formData.append("category", data.courseCategory);
+    formData.append("status", COURSE_STATUS.DRAFT);
+    formData.append("instructions", JSON.stringify(data.courseRequirements));
+    formData.append("thumbnailImage", data.courseImage);
+    setLoading(true);
+    const result = await addCourseDetails(formData, token);
+    if (result) {
+      dispatch(setStep(2));
+      dispatch(setCourse(result));
+    }
+    setLoading(false);
+  };
+
+  /**
+   * isFormUpdated
+   */
+  const isFormUpdated = () => {
+    const currentValue = getValues();
+    console.log(currentValue);
+    if (
+      currentValue.courseTitle !== course.courseName ||
+      currentValue.courseShortDesc !== course.courseDescription ||
+      currentValue.coursePrice !== course.price ||
+      currentValue.courseTags.toString() !== course.tag.toString() ||
+      currentValue.courseBenefits !== course.whatYouWillLearn ||
+      currentValue.courseCategory._id !== course.category._id ||
+      currentValue.courseRequirements.toString() !==
+        course.instructions.toString() ||
+      currentValue.courseImage !== course.thumbnail
+    ) {
+      return true;
+    }
+    return false;
+  };
+
   const getCategories = async () => {
     setLoading(true);
     const categories = await fetchCourseCategories();
@@ -45,15 +148,19 @@ const CourseInformationForm = () => {
     reader.onload = () => {
       // setPreviewSource(reader.result);
       setAvatar(reader.result);
+
+      setValue("courseImage", reader.result);
       // console.log(avatar);
     };
   };
   useEffect(() => {
     getCategories();
+    // console.log(course);
   }, []);
   return (
     <>
       <form
+        onSubmit={handleSubmit(onhandlesubmit)}
         className="space-y-8 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-6"
         encType="multipart/form-data"
       >
@@ -175,13 +282,13 @@ const CourseInformationForm = () => {
 
         {/* chip image upload  */}
         <div className="flex flex-col space-y-2">
-          <label htmlFor="imagefile">
+          <label htmlFor="courseImage">
             Course Thumbnail <sup className=" text-pink-200">*</sup>
           </label>
           <input
             type="file"
-            name="imagefile"
-            id="imagefile"
+            name="courseImage"
+            id="courseImage"
             className=" form-style w-full border"
             onChange={handleFileChange}
           />
@@ -190,14 +297,10 @@ const CourseInformationForm = () => {
               <img
                 src={avatar}
                 alt="avatar"
+                required
                 className=" border rounded-md w-full h-[300px] object-cover"
-                {...register("imagefile", { required: true })}
+                {...register("courseImage")}
               />
-              {errors.imagefile && (
-                <span className=" mt-2 ml-2 text-xs tracking-wide text-pink-200">
-                  thumbnail is required
-                </span>
-              )}
             </div>
           )}
         </div>
@@ -243,6 +346,7 @@ const CourseInformationForm = () => {
           <IconBtn
             disabled={loading}
             text={!editCourse ? "Next" : "Save Changes"}
+            type={"submit"}
           >
             <MdNavigateNext />
           </IconBtn>
