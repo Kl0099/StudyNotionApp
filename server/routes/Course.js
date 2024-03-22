@@ -4,6 +4,7 @@ const {
   getAllCourse,
   getCourseDetails,
   createCourse,
+  editCourse,
 } = require("../controllers/Course");
 const {
   createSection,
@@ -20,6 +21,7 @@ const router = express.Router();
 router.post("/createCourse", auth, isInstructor, createCourse);
 router.get("/getallcourse", getAllCourse);
 router.get("/getcoursedetails", getCourseDetails);
+router.post("/editCourse", auth, isInstructor, editCourse);
 
 // ********************************************************************************************************
 //                                      section routes
