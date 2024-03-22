@@ -5,9 +5,9 @@ const { uploadImageToCloudinary } = require("../utils/imageUploader");
 
 exports.createSubSection = async (req, res) => {
   try {
-    const { sectionId, title, timeDuration, description } = req.body;
-    const video = req.files.videofiles;
-    if (!sectionId || !title || !timeDuration || !description || !video) {
+    const { sectionId, title, description } = req.body;
+    const video = req.files.video;
+    if (!sectionId || !title || !description || !video) {
       return res.status(404).json({
         success: false,
         message: "all fields are required",
@@ -20,7 +20,7 @@ exports.createSubSection = async (req, res) => {
 
     const subSectionDetails = await SubSection.create({
       title: title,
-      timeDuration: timeDuration,
+      timeDuration: `${uploadDetails.duration}`,
       description: description,
       videoUrl: uploadDetails.secure_url,
     });
@@ -36,7 +36,7 @@ exports.createSubSection = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "subSection created successfully",
-      updatedSection,
+      data: updatedSection,
     });
   } catch (error) {
     console.log("createsubSection error", error);
@@ -87,7 +87,7 @@ exports.updateSubSection = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "subSection created successfully",
-      updetedSection,
+      data: updetedSection,
     });
   } catch (error) {
     console.log("updatesubSection error", error);
