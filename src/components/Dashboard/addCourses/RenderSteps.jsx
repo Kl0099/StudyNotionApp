@@ -1,4 +1,5 @@
-import CourseBuilder from "./CourseBuilder/CourseBuilder";
+// import CourseBuilder from "./CourseBuilder/CourseBuilder";
+import CourseBuilderForm from "./CourseBuilder/CourseBuilderForm";
 import CourseInformationForm from "./CourseInfromation/CourseInformationForm";
 import PublishCourse from "./PublishCourse/PublishCourse";
 import React from "react";
@@ -75,7 +76,7 @@ const RenderSteps = () => {
         ))}
       </div>
       {step === 1 && <CourseInformationForm />}
-      {step === 2 && <CourseBuilder />}
+      {step === 2 && <CourseBuilderForm />}
       {step === 3 && <PublishCourse />}
     </>
   );

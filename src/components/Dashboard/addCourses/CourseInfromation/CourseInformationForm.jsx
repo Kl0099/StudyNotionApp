@@ -173,7 +173,7 @@ const CourseInformationForm = () => {
           <input
             id="courseTitle"
             placeholder="Enter a Course Title"
-            {...register("courseTItle", { required: true })}
+            {...register("courseTitle", { required: true })}
             className=" form-style w-full"
           />
           {errors.courseTitle && (

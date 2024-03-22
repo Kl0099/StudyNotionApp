@@ -15,7 +15,7 @@ exports.createCourse = async (req, res) => {
       price,
       category,
       tag,
-      thumbnailImage,
+      // thumbnailImage,
     } = req.body;
     console.log(
       courseName,
@@ -23,10 +23,11 @@ exports.createCourse = async (req, res) => {
       whatYouWillLearn,
       price,
       category,
-      tag,
-      thumbnailImage
+      tag
+      // thumbnailImage
     );
-    // const thumbnail = req.files.thumbnailImage;
+    const thumbnail = req.files.thumbnailImage;
+    console.log("thumbnail : ", thumbnail);
 
     if (
       !courseName ||
@@ -60,21 +61,26 @@ exports.createCourse = async (req, res) => {
       });
     }
 
+    const thumbnailImage = await uploadImageToCloudinary(
+      thumbnail,
+      process.env.FOLDER_NAME
+    );
+    // console.log("cloudinary image :", thumbnailImage);
     //upload image in cloudinary
 
-    const cloud = await cloudinary.v2.uploader.upload(
-      thumbnailImage,
-      {
-        folder: process.env.FOLDER_NAME,
-      },
-      (err, result) => {
-        if (err)
-          return res.status(500).json({
-            success: false,
-            message: err.message,
-          });
-      }
-    );
+    // const cloud = await cloudinary.v2.uploader.upload(
+    //   thumbnailImage,
+    //   {
+    //     folder: process.env.FOLDER_NAME,
+    //   },
+    //   (err, result) => {
+    //     if (err)
+    //       return res.status(500).json({
+    //         success: false,
+    //         message: err.message,
+    //       });
+    //   }
+    // );
 
     //create course
     const newCourse = await Course.create({
@@ -84,7 +90,7 @@ exports.createCourse = async (req, res) => {
       instructor: instructorDetails._id,
       price: price,
       category: categoryDetails._id,
-      thumbnail: cloud.secure_url,
+      thumbnail: thumbnailImage.secure_url,
     });
 
     //add new course to the userSchema
@@ -110,7 +116,7 @@ exports.createCourse = async (req, res) => {
     });
   } catch (error) {
     // Handle any errors that occur during the creation of the course
-    console.error("create course Error : ", error);
+    console.error("create course Error : ", error.message);
     res.status(500).json({
       success: false,
       message: "Failed to create course",
