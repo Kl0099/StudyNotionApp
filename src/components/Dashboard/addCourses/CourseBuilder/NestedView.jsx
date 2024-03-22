@@ -165,13 +165,13 @@ const NestedView = ({ handleChangeEditSectionname }) => {
       ) : viewSubSection ? (
         <SubSectionModal
           modalData={viewSubSection}
-          setModalData={viewSubSection}
+          setModalData={setViewSubSection}
           view={true}
         />
       ) : editSubSection ? (
         <SubSectionModal
           modalData={editSubSection}
-          setModalData={editSubSection}
+          setModalData={setEditSubSection}
           edit={true}
         />
       ) : (

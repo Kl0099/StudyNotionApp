@@ -21,9 +21,13 @@ exports.uploadImageToCloudinary = async (file, folder, height, quality) => {
 exports.uploadVideoToCloudinary = async (file, folder) => {
   try {
     const options = { folder, resource_type: "video" };
-    return await cloudinary.uploader.upload(file.tempFilePath, options);
+    const uploadResult = await cloudinary.v2.uploader.upload(
+      file.tempFilePath,
+      options
+    );
+    return uploadResult;
   } catch (error) {
     console.log("Cloudinary upload video error: " + error.message);
-    return Promise.reject(error);
+    throw error; // Re-throw the error to be caught by the calling function
   }
 };
