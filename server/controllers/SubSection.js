@@ -1,12 +1,16 @@
 const Section = require("../models/Section");
 const Course = require("../models/Course");
 const SubSection = require("../models/SubSection");
-const { uploadImageToCloudinary } = require("../utils/imageUploader");
+const {
+  uploadImageToCloudinary,
+  uploadVideoToCloudinary,
+} = require("../utils/imageUploader");
 
 exports.createSubSection = async (req, res) => {
   try {
     const { sectionId, title, description } = req.body;
     const video = req.files.video;
+    console.log("video : ", video);
     if (!sectionId || !title || !description || !video) {
       return res.status(404).json({
         success: false,

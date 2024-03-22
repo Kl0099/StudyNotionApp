@@ -13,6 +13,17 @@ exports.uploadImageToCloudinary = async (file, folder, height, quality) => {
 
     return await cloudinary.uploader.upload(file.tempFilePath, options);
   } catch (error) {
+    console.log(" cloudinary middleware error: " + error.message);
+
+    return Promise.reject(error);
+  }
+};
+exports.uploadVideoToCloudinary = async (file, folder) => {
+  try {
+    const options = { folder, resource_type: "video" };
+    return await cloudinary.uploader.upload(file.tempFilePath, options);
+  } catch (error) {
+    console.log("Cloudinary upload video error: " + error.message);
     return Promise.reject(error);
   }
 };

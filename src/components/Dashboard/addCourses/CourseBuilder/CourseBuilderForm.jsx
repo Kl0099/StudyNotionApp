@@ -1,7 +1,13 @@
+import {
+  createSection,
+  updateSection,
+} from "../../../../services/operations/courseDetails";
+import { setCourse, setEditCourse, setStep } from "../../../../slices/course";
 import IconBtn from "../../../common/IconBtn";
 import NestedView from "./NestedView";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { MdNavigateNext } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,11 +26,68 @@ const CourseBuilderForm = () => {
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
 
-  const onSubmit = () => {};
-  const goBack = () => {};
-  const goToNext = () => {};
-  const cencelEdit = () => {};
-  const handleChangeEditSectionname = () => {};
+  const onSubmit = async (data) => {
+    setLoading(true);
+    let result;
+    if (editSectionName) {
+      result = await updateSection(
+        {
+          sectionName: data.sectionName,
+          sectionId: editSectionName,
+          courseId: course._id,
+        },
+        token
+      );
+      console.log("if editSectionname is true :", result);
+    } else {
+      result = await createSection(
+        {
+          sectionName: data.sectionName,
+          courseId: course._id,
+        },
+        token
+      );
+    }
+
+    if (result) {
+      dispatch(setCourse(result));
+      setEditSectionName(null);
+      setValue("sectionName", "");
+    }
+    setLoading(false);
+  };
+  const goBack = () => {
+    dispatch(setStep(1));
+    dispatch(setEditCourse(true));
+  };
+  const goToNext = () => {
+    if (course.courseContent.length === 0) {
+      toast.error("please add atleast one section");
+      return;
+    }
+    if (
+      course.courseContent.some((section) => section.subSection.length === 0)
+    ) {
+      toast.error("please add atleast one lecture in  SubSection");
+    }
+
+    dispatch(setStep(3));
+  };
+  const cencelEdit = () => {
+    setEditSectionName(null);
+    setValue("sectionName", "");
+  };
+  const handleChangeEditSectionname = (sectionId, sectionName) => {
+    if (editSectionName === sectionId) {
+      cencelEdit();
+      return;
+    }
+    setEditSectionName(sectionId);
+    setValue("sectionName", sectionName);
+  };
+  // useEffect(() => {
+  //   console.log("course : ", course);
+  // }, []);
   return (
     <div className="space-y-8 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-6">
       <p className="text-2xl font-semibold text-richblack-5">Course Builder</p>

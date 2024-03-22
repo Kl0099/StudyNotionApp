@@ -33,9 +33,9 @@ router.post("/deleteSection", auth, isInstructor, deleteSection);
 // ********************************************************************************************************
 //                                      subsection routes
 // ********************************************************************************************************
-router.post("/addSection", auth, isInstructor, createSubSection);
+router.post("/addSubSection", auth, isInstructor, createSubSection);
 // Update a Section
-router.post("/updateSection", auth, isInstructor, updateSubSection);
+router.post("/updateSubSection", auth, isInstructor, updateSubSection);
 // Delete a Section
-router.post("/deleteSection", auth, isInstructor, deleteSubSection);
+router.post("/deleteSubSection", auth, isInstructor, deleteSubSection);
 module.exports = router;
