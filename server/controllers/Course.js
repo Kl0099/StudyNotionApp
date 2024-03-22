@@ -17,15 +17,15 @@ exports.createCourse = async (req, res) => {
       tag,
       thumbnailImage,
     } = req.body;
-    // console.log(
-    //   courseName,
-    //   courseDescription,
-    //   whatYouWillLearn,
-    //   price,
-    //   category,
-    //   tag,
-    //   thumbnailImage
-    // );
+    console.log(
+      courseName,
+      courseDescription,
+      whatYouWillLearn,
+      price,
+      category,
+      tag,
+      thumbnailImage
+    );
     // const thumbnail = req.files.thumbnailImage;
 
     if (

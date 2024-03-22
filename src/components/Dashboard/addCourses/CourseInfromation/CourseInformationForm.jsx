@@ -6,6 +6,7 @@ import {
 import { setCourse, setStep } from "../../../../slices/course";
 import { COURSE_STATUS } from "../../../../utils/constants";
 import IconBtn from "../../../common/IconBtn";
+import Upload from "../Upload";
 import ChipInput from "./ChipInput";
 import RequirementsField from "./RequirementsField";
 import React, { useEffect, useState } from "react";
@@ -281,7 +282,7 @@ const CourseInformationForm = () => {
         />
 
         {/* chip image upload  */}
-        <div className="flex flex-col space-y-2">
+        {/* <div className="flex flex-col space-y-2">
           <label htmlFor="courseImage">
             Course Thumbnail <sup className=" text-pink-200">*</sup>
           </label>
@@ -303,7 +304,16 @@ const CourseInformationForm = () => {
               />
             </div>
           )}
-        </div>
+        </div> */}
+
+        <Upload
+          name={"courseImage"}
+          errors={errors}
+          setValue={setValue}
+          label={"Course Thumbnail"}
+          editData={editCourse ? course?.thumbnail : null}
+          register={register}
+        />
 
         {/* course banifits  */}
         <div className="flex flex-col space-y-2">
