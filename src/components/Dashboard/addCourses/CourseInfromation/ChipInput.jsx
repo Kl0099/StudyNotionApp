@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { useSelector } from "react-redux";
 
@@ -29,6 +29,19 @@ const ChipInput = ({
     setChips(newChip);
   };
   const [chips, setChips] = useState([]);
+  useEffect(() => {
+    if (editCourse) {
+      // console.log(course)
+      setChips(course?.tag);
+    }
+    register(name, { required: true, validate: (value) => value.length > 0 });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    setValue(name, chips);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chips]);
   return (
     <div className=" flex flex-col space-y-2">
       <label

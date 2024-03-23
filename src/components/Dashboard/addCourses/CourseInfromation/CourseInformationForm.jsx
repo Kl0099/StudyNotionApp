@@ -35,7 +35,7 @@ const CourseInformationForm = () => {
    * onhandlesubmit form submitions
    */
   const onhandlesubmit = async (data) => {
-    console.log(data);
+    // console.log(data);
     // e.preventDefault();
     // console.log("onhandlesubmit");
     // isFormUpdated();
@@ -155,6 +155,17 @@ const CourseInformationForm = () => {
     };
   };
   useEffect(() => {
+    if (editCourse) {
+      // console.log("data populated", editCourse)
+      setValue("courseTitle", course.courseName);
+      setValue("courseShortDesc", course.courseDescription);
+      setValue("coursePrice", course.price);
+      setValue("courseTags", course.tag);
+      setValue("courseBenefits", course.whatYouWillLearn);
+      setValue("courseCategory", course.category);
+      setValue("courseRequirements", course.instructions);
+      setValue("courseImage", course.thumbnail);
+    }
     getCategories();
     // console.log(course);
   }, []);
@@ -282,29 +293,6 @@ const CourseInformationForm = () => {
         />
 
         {/* chip image upload  */}
-        {/* <div className="flex flex-col space-y-2">
-          <label htmlFor="courseImage">
-            Course Thumbnail <sup className=" text-pink-200">*</sup>
-          </label>
-          <input
-            type="file"
-            name="courseImage"
-            id="courseImage"
-            className=" form-style w-full border"
-            onChange={handleFileChange}
-          />
-          {avatar === "" ? null : (
-            <div>
-              <img
-                src={avatar}
-                alt="avatar"
-                required
-                className=" border rounded-md w-full h-[300px] object-cover"
-                {...register("courseImage")}
-              />
-            </div>
-          )}
-        </div> */}
 
         <Upload
           name={"courseImage"}

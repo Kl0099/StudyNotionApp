@@ -7,6 +7,7 @@ const {
   editCourse,
   getInstructorCourses,
   deleteCourse,
+  getFullCourseDetails,
 } = require("../controllers/Course");
 const {
   createSection,
@@ -24,8 +25,9 @@ router.post("/createCourse", auth, isInstructor, createCourse);
 router.get("/getallcourse", getAllCourse);
 router.get("/getcoursedetails", getCourseDetails);
 router.post("/editCourse", auth, isInstructor, editCourse);
+router.post("/getFullCourseDetails", auth, getFullCourseDetails);
 router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses);
-router.delete("/deleteCourse", auth, isInstructor, deleteCourse);
+router.delete("/deleteCourse", deleteCourse);
 // ********************************************************************************************************
 //                                      section routes
 // ********************************************************************************************************
