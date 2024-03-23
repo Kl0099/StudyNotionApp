@@ -232,3 +232,82 @@ export const deleteSubSection = async (data, token) => {
   toast.dismiss(toastId);
   return result;
 };
+// /fetchInstucter course
+export const fetchInstructorCourses = async (token) => {
+  let result = [];
+  const toastId = toast.loading("Loading...");
+  try {
+    const response = await apiConnector(
+      "GET",
+      courseEndpoints.GET_ALL_INSTRUCTOR_COURSES_API,
+      null,
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    );
+
+    if (!response?.data?.success) {
+      throw new Error("could not fetch Instuctor courses");
+    }
+    result = response?.data?.data;
+  } catch (error) {
+    console.log("error while fetching instructor courses : ", error);
+    toast.error(error.message);
+  }
+  toast.dismiss(toastId);
+  return result;
+};
+
+// delete Course
+export const deleteCourse = async (data, token) => {
+  const toastId = toast.loading("Loading...");
+  try {
+    const response = await apiConnector(
+      "DELETE",
+      courseEndpoints.DELETE_COURSE_API,
+      data,
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    );
+
+    if (!response?.data?.success) {
+      throw new Error("Could Not Delete Course");
+    }
+    toast.success("Course Deleted");
+  } catch (error) {
+    console.log("error while dispatch delete course", error);
+    toast.error(error.message);
+  }
+  toast.dismiss(toastId);
+};
+// get full details of a course
+export const getFullDetailsOfCourse = async (courseId, token) => {
+  const toastId = toast.loading("Loading...");
+  //   dispatch(setLoading(true));
+  let result = null;
+  try {
+    const response = await apiConnector(
+      "POST",
+      courseEndpoints.GET_FULL_COURSE_DETAILS_AUTHENTICATED,
+      {
+        courseId,
+      },
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    );
+
+    if (!response.data.success) {
+      throw new Error(response.data.message);
+    }
+    result = response?.data?.data;
+  } catch (error) {
+    console.log("error while getting full course Details", error);
+    result = error.response.data;
+    // toast.error(error.response.data.message);
+  }
+  toast.dismiss(toastId);
+  //   dispatch(setLoading(false));
+  return result;
+};
