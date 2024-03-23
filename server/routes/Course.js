@@ -25,7 +25,7 @@ router.post("/createCourse", auth, isInstructor, createCourse);
 router.get("/getallcourse", getAllCourse);
 router.get("/getcoursedetails", getCourseDetails);
 router.post("/editCourse", auth, isInstructor, editCourse);
-router.post("/getFullCourseDetails", auth, getFullCourseDetails);
+router.post("/getFullCourseDetails", getFullCourseDetails);
 router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses);
 router.delete("/deleteCourse", deleteCourse);
 // ********************************************************************************************************

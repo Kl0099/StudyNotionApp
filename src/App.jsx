@@ -12,6 +12,7 @@ import Footer from "./components/common/Footer";
 import Navbar from "./components/common/Navbar";
 import { accountType } from "./data/constants";
 import About from "./pages/About";
+import Catalog from "./pages/Catalog";
 import Contact from "./pages/Contact";
 import Dashboard from "./pages/Dashboard";
 import Error from "./pages/Error";
@@ -77,6 +78,10 @@ function App() {
         <Route
           path="/contactus"
           element={<Contact />}
+        />
+        <Route
+          path="catalog/:catalogName"
+          element={<Catalog />}
         />
 
         <Route

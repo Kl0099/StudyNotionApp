@@ -3,10 +3,6 @@
 const BASE_URL =
   process.env.REACT_APP_BASE_URL || "http://localhost:4000/api/v1";
 
-export const categories = {
-  CATEGORIES_API: BASE_URL + "/category/allcatagory",
-};
-
 export const authApis = {
   LOGIN_API: BASE_URL + "/auth/login",
   SIGNUP_API: BASE_URL + "/auth/signup",
@@ -42,4 +38,13 @@ export const courseEndpoints = {
     BASE_URL + "/course/getFullCourseDetails",
   LECTURE_COMPLETION_API: BASE_URL + "/course/updateCourseProgress",
   CREATE_RATING_API: BASE_URL + "/course/createRating",
+};
+// CATAGORIES API
+export const categories = {
+  CATEGORIES_API: BASE_URL + "/category/showAllCategories",
+};
+
+// CATALOG PAGE DATA
+export const catalogData = {
+  CATALOGPAGEDATA_API: BASE_URL + "/category/catagorypagedetails",
 };
