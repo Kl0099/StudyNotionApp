@@ -23,7 +23,7 @@ const router = express.Router();
 
 router.post("/createCourse", auth, isInstructor, createCourse);
 router.get("/getallcourse", getAllCourse);
-router.get("/getcoursedetails", getCourseDetails);
+router.post("/getcoursedetails", getCourseDetails);
 router.post("/editCourse", auth, isInstructor, editCourse);
 router.post("/getFullCourseDetails", getFullCourseDetails);
 router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses);

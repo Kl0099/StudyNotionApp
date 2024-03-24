@@ -311,3 +311,30 @@ export const getFullDetailsOfCourse = async (courseId, token) => {
   //   dispatch(setLoading(false));
   return result;
 };
+export const fetchCourseDetails = async (courseId) => {
+  const toastId = toast.loading("Loading...");
+  //   dispatch(setLoading(true));
+  let result = null;
+  try {
+    const response = await apiConnector(
+      "POST",
+      courseEndpoints.COURSE_DETAILS_API,
+      {
+        courseId,
+      }
+    );
+
+    if (!response.data.success) {
+      throw new Error(response.data.message);
+    }
+    result = response.data;
+    console.log(" result od fetching course details  : ", result);
+  } catch (error) {
+    console.log("error while fetching course details", error);
+    result = error.response.data;
+    // toast.error(error.response.data.message);
+  }
+  toast.dismiss(toastId);
+  //   dispatch(setLoading(false));
+  return result;
+};
