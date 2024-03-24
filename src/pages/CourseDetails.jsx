@@ -39,7 +39,7 @@ const CourseDetails = () => {
   // const [collapse, setCollapse] = useState("")
   const [isActive, setIsActive] = useState(Array(0));
   const handleActive = (id) => {
-    // console.log("called", id)
+    console.log("called", id);
     setIsActive(
       !isActive.includes(id)
         ? isActive.concat([id])
@@ -48,13 +48,13 @@ const CourseDetails = () => {
   };
 
   const [totalNoOfLectures, setTotalNoOfLectures] = useState(0);
-  //   useEffect(() => {
-  //     let lectures = 0;
-  //     response?.data?.courseDetails?.courseContent?.forEach((sec) => {
-  //       lectures += sec.subSection.length || 0;
-  //     });
-  //     setTotalNoOfLectures(lectures);
-  //   }, [response]);
+  useEffect(() => {
+    let lectures = 0;
+    response?.data?.courseDetails?.courseContent?.forEach((sec) => {
+      lectures += sec.subSection.length || 0;
+    });
+    setTotalNoOfLectures(lectures);
+  }, [response]);
 
   const handleBuyCourse = () => {};
   useEffect(() => {
@@ -75,11 +75,11 @@ const CourseDetails = () => {
     fetchdetails();
   }, [courseId]);
   useEffect(() => {
-    console.log("course details res: ", response?.data?.courseDetails);
+    // console.log("course details res: ", response?.data?.courseDetails);
   }, [response]);
-  useEffect(() => {
-    console.log("course details res: ");
-  }, []);
+  // useEffect(() => {
+  //   console.log("course details res: ");
+  // }, []);
   // const {
   //   // _id,
   //   courseName,
@@ -211,15 +211,16 @@ const CourseDetails = () => {
             </div>
 
             {/* Course Details Accordion */}
-            <div className="py-4">
-              {response?.data?.courseContent?.map((course, index) => (
-                <CourseAccordionBar
-                  course={course}
-                  key={index}
-                  isActive={isActive}
-                  handleActive={handleActive}
-                />
-              ))}
+            <div className="py-4 border ">
+              {response?.data?.courseContent &&
+                response?.data?.courseContent?.map((course, index) => (
+                  <CourseAccordionBar
+                    course={course}
+                    key={index}
+                    isActive={isActive}
+                    handleActive={handleActive}
+                  />
+                ))}
             </div>
 
             {/* Author Details */}

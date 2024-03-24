@@ -49,7 +49,7 @@ const CourseDetailsCard = ({
           </div>
           <div className="flex flex-col gap-4">
             <button
-              className="yellowButton"
+              className="yellowButton hover:scale-95"
               onClick={
                 user && courses?.studentsEnroled?.includes(user?._id)
                   ? () => navigate("/dashboard/enrolled-courses")
