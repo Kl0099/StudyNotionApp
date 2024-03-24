@@ -1,3 +1,6 @@
+import Footer from "../components/common/Footer";
+import CourseSlider from "../components/core/Catalog/CourseSlider";
+import Course_Card from "../components/core/Catalog/Course_Card";
 import { apiConnector } from "../services/apiConnector";
 import { categories } from "../services/apis";
 import { getCatalogPageData } from "../services/operations/pageAndComponentData";
@@ -19,9 +22,11 @@ const Catalog = () => {
       setLoading(true);
       try {
         const res = await apiConnector("GET", categories.CATEGORIES_API);
+        // console.log("show all categories : ", res);
         const category_id = res?.data?.data?.filter(
           (ct) => ct.name.split(" ").join("-").toLowerCase() === catalogName
-        )[0].category_id;
+        )[0]._id;
+        console.log(" category id :", category_id);
         setCategoryId(category_id);
       } catch (error) {
         console.log("Could not fetch categories : ", error);
@@ -35,6 +40,7 @@ const Catalog = () => {
       // setLoading(true);
       try {
         const res = await getCatalogPageData(categoryId);
+        // console.log("full categories : ", res);
         setCatalogPageData(res);
       } catch (error) {
         console.log("error while fetching data catalog", error);
@@ -47,7 +53,7 @@ const Catalog = () => {
   }, [categoryId]);
 
   useEffect(() => {
-    console.log("Fetching category : ", catalogPageData);
+    // console.log("Fetching category : ", catalogPageData);
   }, [catalogPageData]);
 
   if (loading) {
@@ -80,6 +86,66 @@ const Catalog = () => {
           </p>
         </div>
       </div>
+      {/* Section 1 */}
+      <div className=" mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
+        <div className="section_heading">Courses to get you started</div>
+        <div className="my-4 flex border-b border-b-richblack-600 text-sm">
+          <p
+            className={`px-4 py-2 ${
+              active === 1
+                ? "border-b border-b-yellow-25 text-yellow-25"
+                : "text-richblack-50"
+            } cursor-pointer`}
+            onClick={() => setActive(1)}
+          >
+            Most Populer
+          </p>
+          <p
+            className={`px-4 py-2 ${
+              active === 2
+                ? "border-b border-b-yellow-25 text-yellow-25"
+                : "text-richblack-50"
+            } cursor-pointer`}
+            onClick={() => setActive(2)}
+          >
+            New
+          </p>
+        </div>
+        <div>
+          <CourseSlider
+            Courses={catalogPageData?.data?.selectedCategory?.courses}
+          />
+        </div>
+      </div>
+      {/* Section 2 */}
+      <div className=" mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
+        <div className="section_heading">
+          Top courses in {catalogPageData?.data?.differentCategory?.name}
+        </div>
+        <div className="py-8">
+          <CourseSlider
+            Courses={catalogPageData?.data?.differentCategory?.courses}
+          />
+        </div>
+      </div>
+      {/* Section 3 */}
+      <div className=" mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
+        <div className="section_heading">Frequently Bought</div>
+        <div className="py-8">
+          <div className="grid grid-cols-1 gap-6 md:grid-col-2 lg:grid-cols-3">
+            {catalogPageData?.data?.mostSellingCourses
+              ?.slice(0, 4)
+              .map((course, i) => (
+                <Course_Card
+                  course={course}
+                  key={i}
+                  Height={" h-[250px] md:h-[350px]"}
+                />
+              ))}
+          </div>
+        </div>
+      </div>
+      <Footer />
     </>
   );
 };

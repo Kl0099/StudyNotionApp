@@ -10,7 +10,7 @@ export const getCatalogPageData = async (catalogId) => {
       "POST",
       catalogData.CATALOGPAGEDATA_API,
       {
-        catalogId: catalogId,
+        categoryId: catalogId,
       }
     );
     if (!response?.data.success) {

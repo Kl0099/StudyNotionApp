@@ -23,16 +23,16 @@ exports.createCourse = async (req, res) => {
       instructions: _instructions,
       status,
     } = req.body;
-    console.log({
-      courseName: courseName,
-      courseDescription: courseDescription,
-      whatYouWillLearn: whatYouWillLearn,
-      price: price,
-      category: category,
-      // tag: _tag,
-      status: status,
-      instructions: _instructions,
-    });
+    // console.log({
+    //   courseName: courseName,
+    //   courseDescription: courseDescription,
+    //   whatYouWillLearn: whatYouWillLearn,
+    //   price: price,
+    //   category: category,
+    //   // tag: _tag,
+    //   status: status,
+    //   instructions: _instructions,
+    // });
     const tag = JSON.parse(_tag);
     const instructions = JSON.parse(_instructions);
 
@@ -120,7 +120,7 @@ exports.createCourse = async (req, res) => {
       { _id: categoryDetails._id },
       {
         $push: {
-          course: newCourse._id,
+          courses: newCourse._id,
         },
       },
       { new: true }

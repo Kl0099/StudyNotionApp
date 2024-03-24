@@ -1,5 +1,7 @@
 const Category = require("../models/Category");
-
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
 //create Category
 exports.createCategory = async (req, res) => {
   try {
@@ -55,12 +57,14 @@ exports.catagoryPageDetails = async (req, res) => {
   try {
     const { categoryId } = req.body;
 
+    console.log(categoryId);
+
     // Get courses for the specified category
     const selectedCategory = await Category.findById(categoryId)
       .populate({
         path: "courses",
         match: { status: "Published" },
-        populate: "ratingAndReviews",
+        // populate: "RatingAndReview",
       })
       .exec();
 
