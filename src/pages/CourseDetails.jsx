@@ -1,6 +1,8 @@
 import ConfirmationModal from "../components/common/ConfirmationModal";
 import Footer from "../components/common/Footer";
 import RatingStars from "../components/common/RatingStars";
+import CourseAccordionBar from "../components/core/Course/CourseAccordionBar";
+import CourseDetailsCard from "../components/core/Course/CourseDetailsCard";
 import { formatDate } from "../services/formatDate";
 import { fetchCourseDetails } from "../services/operations/courseDetails";
 import GetAvgRating from "../utils/avgRating";
@@ -162,11 +164,11 @@ const CourseDetails = () => {
           </div>
           {/* Courses Card */}
           <div className="right-[1rem] top-[60px] mx-auto hidden min-h-[600px] w-1/3 max-w-[410px] translate-y-24 md:translate-y-0 lg:absolute  lg:block">
-            {/* <CourseDetailsCard
-  	  course={response?.data?.courseDetails}
-  	  setConfirmationModal={setConfirmationModal}
-  	  handleBuyCourse={handleBuyCourse}
-  	/> */}
+            <CourseDetailsCard
+              course={response?.data?.courseDetails}
+              setConfirmationModal={setConfirmationModal}
+              handleBuyCourse={handleBuyCourse}
+            />
           </div>
         </div>
       </div>
@@ -209,16 +211,16 @@ const CourseDetails = () => {
             </div>
 
             {/* Course Details Accordion */}
-            {/* <div className="py-4">
-  	  {courseContent?.map((course, index) => (
-  		<CourseAccordionBar
-  		  course={course}
-  		  key={index}
-  		  isActive={isActive}
-  		  handleActive={handleActive}
-  		/>
-  	  ))}
-  	</div> */}
+            <div className="py-4">
+              {response?.data?.courseContent?.map((course, index) => (
+                <CourseAccordionBar
+                  course={course}
+                  key={index}
+                  isActive={isActive}
+                  handleActive={handleActive}
+                />
+              ))}
+            </div>
 
             {/* Author Details */}
             <div className="mb-12 py-4">
