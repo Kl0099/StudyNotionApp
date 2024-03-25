@@ -5,7 +5,10 @@ import CourseAccordionBar from "../components/core/Course/CourseAccordionBar";
 import CourseDetailsCard from "../components/core/Course/CourseDetailsCard";
 import { formatDate } from "../services/formatDate";
 import { fetchCourseDetails } from "../services/operations/courseDetails";
-import { buyCourse } from "../services/operations/studentFeturesapi";
+import {
+  buyCourse,
+  directEnrolled,
+} from "../services/operations/studentFeturesapi";
 import GetAvgRating from "../utils/avgRating";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -63,7 +66,8 @@ const CourseDetails = () => {
     // step 2 create option object for opening modal
     // step 3
     if (token) {
-      buyCourse();
+      // buyCourse([courseId], token, user, navigate, dispatch);
+      directEnrolled([courseId], token, navigate);
     } else {
       toast.error("Login first !!!");
       navigate("/login");
@@ -168,7 +172,7 @@ const CourseDetails = () => {
               </p>
               <button
                 className="yellowButton"
-                onClick={handleBuyCourse}
+                onClick={() => handleBuyCourse()}
               >
                 Buy Now
               </button>

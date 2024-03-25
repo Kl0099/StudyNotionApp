@@ -4,6 +4,7 @@ const Course = require("../models/Course");
 const User = require("../models/User");
 const mailSender = require("../utils/mailSender");
 const paymentSuccessEmail = require("../mail/templates/paymentSuccessEmail");
+const crypto = require("crypto");
 // const mailSender = require("../utils/mailSender");
 // const courseProgress = require("../models/CourseProgress");
 const CourseProgress = require("../models/CourseProgress");
@@ -51,7 +52,7 @@ exports.capturePayment = async (req, res) => {
     }
   }
   const options = {
-    amount: totalAmount,
+    amount: totalAmount * 100,
     currency: "INR",
     receipt: Math.random(Date.now()).toString(),
   };
@@ -206,5 +207,77 @@ exports.sendPaymentSuccessEmail = async (req, res) => {
     return res
       .status(400)
       .json({ success: false, message: "Could not send email" });
+  }
+};
+
+// direct enrolled students without payment
+exports.directEnrolled = async (req, res) => {
+  const { courses } = req.body;
+  const userId = req.user.id;
+  if ((!courses, !userId)) {
+    return res.status(400).json({
+      success: false,
+      message: "data is incomplete",
+    });
+  }
+
+  for (const courseId of courses) {
+    try {
+      const enrolledcourses = await Course.findOneAndUpdate(
+        { _id: courseId },
+        {
+          $push: {
+            studentsEnrolled: userId,
+          },
+        },
+        {
+          new: true,
+        }
+      );
+      if (!enrolledcourses) {
+        return res.status(400).json({
+          success: false,
+          message: "courses not found !!!",
+        });
+      }
+      const courseProgress = await CourseProgress.create({
+        courseID: courseId,
+        userId: userId,
+        completedVideos: [],
+      });
+
+      // find the students and add courses
+      const enrolledStudents = await User.findByIdAndUpdate(
+        userId,
+        {
+          $push: {
+            courses: courseId,
+            courseProgress: courseProgress._id,
+          },
+        },
+        { new: true }
+      );
+      let StudnetName =
+        enrolledStudents.firstName + " " + enrolledStudents.lastName;
+      const emailResponse = mailSender(
+        enrolledStudents.email,
+        `Successfully Enrolled into ${enrolledcourses.courseName}`,
+        courseEnrollmentEmail(enrolledcourses.courseName, StudnetName)
+      );
+      // console.log("email sent successfully : ", emailResponse);
+      return res.status(200).json({
+        success: true,
+        message: "Successfully added students to course",
+      });
+    } catch (error) {
+      console.log(
+        "error in enrolled studnet func in verifypayment : ",
+        error.message
+      );
+      return res.status(500).json({
+        status: false,
+        message: error.message,
+      });
+    }
   }
 };

@@ -3,6 +3,7 @@ const {
   capturePayment,
   verifyPayment,
   sendPaymentSuccessEmail,
+  directEnrolled,
 } = require("../controllers/Payments");
 const router = express.Router();
 const { auth, isStudent } = require("../middlewares/auth");
@@ -15,5 +16,6 @@ router.post(
   isStudent,
   sendPaymentSuccessEmail
 );
+router.post("/directEnrolled", auth, isStudent, directEnrolled);
 
 module.exports = router;

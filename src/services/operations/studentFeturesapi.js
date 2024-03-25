@@ -17,7 +17,7 @@ function loadScript(src) {
     script.onerror = () => {
       resolve(false);
     };
-    document.appendChild(script);
+    document.body.appendChild(script);
   });
 }
 
@@ -53,7 +53,7 @@ export const buyCourse = async (
 
     // options
     const options = {
-      key: process.env.RAZORPAY_KEY || "secretRazorpay",
+      key: process.env.RAZORPAY_KEY || "razorepaysecrete",
       currency: orderResponse.data.data.currency,
       amount: `${orderResponse.data.data.amount}`,
       order_id: orderResponse.data.data.id,
@@ -74,6 +74,13 @@ export const buyCourse = async (
         verifyPayment({ ...response, courses }, token, navigate, dispatch);
       },
     };
+    const paymentObject = new window.Razorpay(options);
+
+    paymentObject.open();
+    paymentObject.on("payment.failed", function (response) {
+      toast.error("Oops! Payment Failed.");
+      console.log(response.error);
+    });
   } catch (error) {
     console.log("payment error: " + error.message);
     toast.error("payment error");
@@ -124,3 +131,25 @@ async function verifyPayment(bodyData, token, navigate, dispatch) {
   toast.dismiss(toastId);
   dispatch(setPaymentLoading(false));
 }
+
+export const directEnrolled = async (courses, token, navigate) => {
+  const toastId = toast.loading("Loading...");
+  try {
+    const response = await apiConnector(
+      "POST",
+      studentEndpoints.DIRECTENROLLED_API,
+      { courses },
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    );
+    if (!response.data.success) {
+      throw new Error("fails to direct enroll");
+    }
+    toast.success("successfuly direct enrolled");
+    navigate("/dashboard/enrolled-courses");
+  } catch (error) {
+    console.log("error while direct enrolled : ", error.message);
+  }
+  toast.dismiss(toastId);
+};
