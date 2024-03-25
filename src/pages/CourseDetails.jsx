@@ -5,8 +5,10 @@ import CourseAccordionBar from "../components/core/Course/CourseAccordionBar";
 import CourseDetailsCard from "../components/core/Course/CourseDetailsCard";
 import { formatDate } from "../services/formatDate";
 import { fetchCourseDetails } from "../services/operations/courseDetails";
+import { buyCourse } from "../services/operations/studentFeturesapi";
 import GetAvgRating from "../utils/avgRating";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { BiInfoCircle } from "react-icons/bi";
 import { HiOutlineGlobeAlt } from "react-icons/hi";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
@@ -56,7 +58,18 @@ const CourseDetails = () => {
     setTotalNoOfLectures(lectures);
   }, [response]);
 
-  const handleBuyCourse = () => {};
+  const handleBuyCourse = () => {
+    // step 1 script load at run time
+    // step 2 create option object for opening modal
+    // step 3
+    if (token) {
+      buyCourse();
+    } else {
+      toast.error("Login first !!!");
+      navigate("/login");
+      return;
+    }
+  };
   useEffect(() => {
     // console.log("CourseDetails page courseId: ", courseId);
     // Calling fetchCourseDetails fucntion to fetch the details
@@ -75,7 +88,7 @@ const CourseDetails = () => {
     fetchdetails();
   }, [courseId]);
   useEffect(() => {
-    // console.log("course details res: ", response?.data?.courseDetails);
+    // console.log("course details res: ", response?.data);
   }, [response]);
   // useEffect(() => {
   //   console.log("course details res: ");
@@ -229,10 +242,11 @@ const CourseDetails = () => {
               <div className="flex items-center gap-4 py-4">
                 <img
                   src={
-                    response?.data?.courseDetails?.instructor.image
-                      ? response?.data?.courseDetails?.instructor.image
+                    response?.data?.courseDetails?.instructor?.image?.url
+                      ? response?.data?.courseDetails?.instructor?.image?.url
                       : `https://api.dicebear.com/5.x/initials/svg?seed=${response?.data?.courseDetails?.instructor?.firstName} ${response?.data?.courseDetails?.instructor.lastName}`
                   }
+                  // src={`https://api.dicebear.com/5.x/initials/svg?seed=${response?.data?.courseDetails?.instructor?.firstName} ${response?.data?.courseDetails?.instructor.lastName}`}
                   alt="Author"
                   className="h-14 w-14 rounded-full object-cover"
                 />
