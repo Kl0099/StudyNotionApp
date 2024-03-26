@@ -1,5 +1,5 @@
 const express = require("express");
-const { auth } = require("../middlewares/auth");
+const { auth, isStudent } = require("../middlewares/auth");
 const fileUpload = require("express-fileupload");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
@@ -9,6 +9,7 @@ const {
   deleteAccount,
   getAllUserDetails,
   updateProfilePic,
+  getEnrolledCourses,
 } = require("../controllers/Profile");
 const router = express.Router();
 
@@ -21,4 +22,6 @@ router.post(
 );
 router.delete("/deleteaccount", auth, deleteAccount);
 router.get("/getallusersdetails", auth, getAllUserDetails);
+router.get("/getEnrolledCourses", auth, getEnrolledCourses);
+
 module.exports = router;

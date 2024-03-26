@@ -44,7 +44,7 @@ const CourseDetails = () => {
   // const [collapse, setCollapse] = useState("")
   const [isActive, setIsActive] = useState(Array(0));
   const handleActive = (id) => {
-    console.log("called", id);
+    // console.log("called", id);
     setIsActive(
       !isActive.includes(id)
         ? isActive.concat([id])
@@ -91,14 +91,17 @@ const CourseDetails = () => {
     };
     fetchdetails();
   }, [courseId]);
-  useEffect(() => {
-    // console.log("course details res: ", response?.data);
-  }, [response]);
+  // useEffect(() => {
+  //   console.log(
+  //     "course details res: ",
+  //     response?.data?.courseDetails?.courseContent
+  //   );
+  // }, [response]);
   // useEffect(() => {
   //   console.log("course details res: ");
   // }, []);
   // const {
-  //   // _id,
+  //   _id: course_id,
   //   courseName,
   //   courseDescription,
   //   thumbnail,
@@ -109,7 +112,7 @@ const CourseDetails = () => {
   //   instructor,
   //   studentsEnroled,
   //   createdAt,
-  // } = response.data?.courseDetails;
+  // } = loading ? null : response.data?.courseDetails;
 
   return loading ? (
     <>Loading...</>
@@ -226,18 +229,19 @@ const CourseDetails = () => {
                 </div>
               </div>
             </div>
-
+            {/* <div>hellow</div> */}
             {/* Course Details Accordion */}
-            <div className="py-4 border ">
-              {response?.data?.courseContent &&
-                response?.data?.courseContent?.map((course, index) => (
+            <div className="py-4 ">
+              {response?.data?.courseDetails?.courseContent.map(
+                (course, index) => (
                   <CourseAccordionBar
                     course={course}
                     key={index}
                     isActive={isActive}
                     handleActive={handleActive}
                   />
-                ))}
+                )
+              )}
             </div>
 
             {/* Author Details */}

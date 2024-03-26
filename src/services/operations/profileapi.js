@@ -2,6 +2,7 @@ import { setToken, setLoading, setSignupData } from "../../slices/auth";
 import { setUser } from "../../slices/profile";
 import { apiConnector } from "../apiConnector";
 import { authApis, profileApis } from "../apis";
+import { profileEndpoints } from "../apis";
 import { logout } from "./authapi";
 import { toast } from "react-hot-toast";
 
@@ -121,4 +122,27 @@ export const deleteProfile = (token, navigate) => {
     }
     toast.dismiss(toastid);
   };
+};
+
+export const getUserEnrolledCourses = async (token) => {
+  // const toastid = toast.loading("Loading...");
+  let result;
+  try {
+    const response = await apiConnector(
+      "GET",
+      profileEndpoints.GET_USER_ENROLLED_COURSES_API,
+      null,
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    );
+    if (!response.data.success) {
+      throw new Error(response.data.message);
+    }
+    result = response.data.data;
+    return result;
+  } catch (error) {
+    console.log("error while fetching user enrolled courses ", error);
+  }
+  // toast.dismiss(toastid);
 };

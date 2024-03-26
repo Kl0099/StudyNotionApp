@@ -10,9 +10,12 @@ const CourseAccordionBar = ({ course, isActive, handleActive }) => {
     setSectionHeight(active ? contentEl.current.scrollHeight : 0);
   }, [active]);
   useEffect(() => {
-    console.log("course id : ", course._id);
+    // console.log("course id : ", course._id);
     setActive(isActive?.includes(course._id));
   }, [isActive]);
+  useEffect(() => {
+    // console.log("curse.subsection : ", course.subSection);
+  }, []);
   return (
     <div className="overflow-hidden border border-solid border-richblack-600 bg-richblack-700 text-richblack-5 last:mb-0">
       <div>
