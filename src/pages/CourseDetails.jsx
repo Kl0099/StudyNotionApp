@@ -9,6 +9,7 @@ import {
   buyCourse,
   directEnrolled,
 } from "../services/operations/studentFeturesapi";
+import { addToCart } from "../slices/cart";
 import GetAvgRating from "../utils/avgRating";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -67,7 +68,7 @@ const CourseDetails = () => {
     // step 3
     if (token) {
       // buyCourse([courseId], token, user, navigate, dispatch);
-      directEnrolled([courseId], token, navigate);
+      directEnrolled([courseId], token, navigate, dispatch);
     } else {
       toast.error("Login first !!!");
       navigate("/login");
@@ -91,12 +92,9 @@ const CourseDetails = () => {
     };
     fetchdetails();
   }, [courseId]);
-  // useEffect(() => {
-  //   console.log(
-  //     "course details res: ",
-  //     response?.data?.courseDetails?.courseContent
-  //   );
-  // }, [response]);
+  useEffect(() => {
+    console.log("course details res: ", response?.data?.courseDetails);
+  }, [response]);
   // useEffect(() => {
   //   console.log("course details res: ");
   // }, []);
@@ -179,7 +177,14 @@ const CourseDetails = () => {
               >
                 Buy Now
               </button>
-              <button className="blackButton">Add to Cart</button>
+              <button
+                onClick={() =>
+                  dispatch(addToCart(response?.data?.courseDetails))
+                }
+                className="blackButton"
+              >
+                Add to Cart
+              </button>
             </div>
           </div>
           {/* Courses Card */}

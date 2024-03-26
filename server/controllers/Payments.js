@@ -259,11 +259,11 @@ exports.directEnrolled = async (req, res) => {
       );
       let StudnetName =
         enrolledStudents.firstName + " " + enrolledStudents.lastName;
-      const emailResponse = mailSender(
-        enrolledStudents.email,
-        `Successfully Enrolled into ${enrolledcourses.courseName}`,
-        courseEnrollmentEmail(enrolledcourses.courseName, StudnetName)
-      );
+      // const emailResponse = mailSender(
+      //   enrolledStudents.email,
+      //   `Successfully Enrolled into ${enrolledcourses.courseName}`,
+      //   courseEnrollmentEmail(enrolledcourses.courseName, StudnetName)
+      // );
       // console.log("email sent successfully : ", emailResponse);
       return res.status(200).json({
         success: true,

@@ -132,7 +132,7 @@ async function verifyPayment(bodyData, token, navigate, dispatch) {
   dispatch(setPaymentLoading(false));
 }
 
-export const directEnrolled = async (courses, token, navigate) => {
+export const directEnrolled = async (courses, token, navigate, dispatch) => {
   const toastId = toast.loading("Loading...");
   try {
     const response = await apiConnector(
@@ -147,6 +147,7 @@ export const directEnrolled = async (courses, token, navigate) => {
       throw new Error("fails to direct enroll");
     }
     toast.success("successfuly direct enrolled");
+    dispatch(resetCart());
     navigate("/dashboard/enrolled-courses");
   } catch (error) {
     console.log("error while direct enrolled : ", error.message);

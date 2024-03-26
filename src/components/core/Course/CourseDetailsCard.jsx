@@ -1,3 +1,5 @@
+import { addToCart } from "../../../slices/cart";
+import { ACCOUNT_TYPE } from "../../../utils/constants";
 import copy from "copy-to-clipboard";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
@@ -25,7 +27,19 @@ const CourseDetailsCard = ({
     copy(window.location.href);
     toast.success("Link copied to clipboard");
   };
-  const handleAddToCart = () => {};
+  const handleAddToCart = () => {
+    if (user && user.accounType === ACCOUNT_TYPE.INSTRUCTOR) {
+      toast.error("you are teacher you can not buy course");
+      return;
+    }
+    if (toast) {
+      dispatch(addToCart(course));
+      return;
+    }
+    toast.error("Login First !!!");
+    navigate("/login");
+    return;
+  };
   useEffect(() => {
     console.log("useEffect working : ", courses);
     setCourses(course);
