@@ -5,6 +5,8 @@ import EnrolledCourses from "./components/Dashboard/EnrolledCourses";
 import MyCourses from "./components/Dashboard/MyCourses";
 import MyProfile from "./components/Dashboard/MyProfile";
 import Settings from "./components/Dashboard/Settings/index";
+import VideoDetails from "./components/Dashboard/VideoDetails/VideoDetails";
+import VideoDetailsSideBar from "./components/Dashboard/VideoDetails/VideoDetailsSideBar";
 import AddCourses from "./components/Dashboard/addCourses";
 import Cart from "./components/Dashboard/cart";
 import PrivateRoute from "./components/auth/PrivateRoute";
@@ -23,6 +25,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import UpdatePassword from "./pages/UpdatePassword";
 import VerifyEmail from "./pages/VerifyEmail";
+import ViewCourse from "./pages/ViewCourse";
 import { getUser } from "./services/operations/profileapi";
 import { ACCOUNT_TYPE } from "./utils/constants";
 import { useEffect } from "react";
@@ -104,6 +107,7 @@ function App() {
             path="/dashboard/settings"
             element={<Settings />}
           />
+          {/* student  */}
           {user?.accountType === ACCOUNT_TYPE.STUDENT && (
             <>
               <Route
@@ -130,6 +134,19 @@ function App() {
               <Route
                 path="dashboard/edit-course/:courseId"
                 element={<EditCourse />}
+              />
+            </>
+          )}
+        </Route>
+
+        {/* video lectures routes
+         */}
+        <Route element={<ViewCourse />}>
+          {user && user.accountType === ACCOUNT_TYPE.STUDENT && (
+            <>
+              <Route
+                path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
+                element={<VideoDetails />}
               />
             </>
           )}

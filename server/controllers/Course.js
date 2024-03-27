@@ -384,6 +384,7 @@ exports.getFullCourseDetails = async (req, res) => {
   try {
     const { courseId } = req.body;
     const userId = req.user.id;
+    // console.log(courseId);
     const courseDetails = await Course.findOne({
       _id: courseId,
     })
@@ -445,6 +446,51 @@ exports.getFullCourseDetails = async (req, res) => {
       },
     });
   } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+exports.updateCourseProgress = async (req, res) => {
+  const { courseId, subsectionId } = req.body;
+  console.log("subSection id : ", subsectionId);
+  const userId = req.user.id;
+  try {
+    const subSection = await SubSection.findById(subsectionId);
+    if (!subSection) {
+      return res.status(404).json({
+        success: false,
+        message: "course subsection not found",
+      });
+    }
+    let courseProgress = await CourseProgress.findOne({
+      courseID: courseId,
+      userId: userId,
+    });
+    if (!courseProgress) {
+      return res.status(404).json({
+        success: false,
+        message: "course progress not found",
+      });
+    } else {
+      if (courseProgress.completedVideos.includes(subsectionId)) {
+        return res.status(400).json({
+          success: false,
+          message: "already completed this video",
+        });
+      }
+
+      courseProgress.completedVideos.push(subsectionId);
+    }
+
+    courseProgress.save();
+    return res.status(200).json({
+      success: true,
+      message: "course progress updated successfully",
+    });
+  } catch (error) {
+    console.log("error while updaate the course progress : ", error.message);
     return res.status(500).json({
       success: false,
       message: error.message,

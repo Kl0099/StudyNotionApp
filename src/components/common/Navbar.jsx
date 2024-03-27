@@ -7,6 +7,7 @@ import { accountType } from "../../data/constants";
 import { apiConnector } from "../../services/apiConnector";
 import { categories } from "../../services/apis";
 import ProfileDropDown from "../auth/ProfileDropDown";
+import Catalog from "./Catalog";
 import axios from "axios";
 import { AiOutlineMenu, AiOutlineShoppingCart } from "react-icons/ai";
 import { BsChevronDown } from "react-icons/bs";
@@ -157,7 +158,14 @@ const Navbar = () => {
               </button>
             </Link>
           )}
-          {token !== null && <ProfileDropDown />}
+          {token !== null && (
+            <ProfileDropDown
+              NavbarLinks={NavbarLinks}
+              matchRoute={matchRoute}
+              subLinks={subLinks}
+              loading={loading}
+            />
+          )}
         </div>
         <button className="mr-4 md:hidden">
           <AiOutlineMenu
