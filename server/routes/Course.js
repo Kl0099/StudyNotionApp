@@ -1,5 +1,5 @@
 const express = require("express");
-const { auth, isInstructor } = require("../middlewares/auth");
+const { auth, isInstructor, isStudent } = require("../middlewares/auth");
 const {
   getAllCourse,
   getCourseDetails,
@@ -20,6 +20,11 @@ const {
   updateSubSection,
   deleteSubSection,
 } = require("../controllers/SubSection");
+const {
+  createRating,
+  getAvgRating,
+  getAllRatingAndReviews,
+} = require("../controllers/RatingAndreviews");
 const router = express.Router();
 
 router.post("/createCourse", auth, isInstructor, createCourse);
@@ -28,8 +33,13 @@ router.post("/getcoursedetails", getCourseDetails);
 router.post("/editCourse", auth, isInstructor, editCourse);
 router.post("/getFullCourseDetails", auth, getFullCourseDetails);
 router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses);
-router.post("/updateCourseProgress", auth, updateCourseProgress);
+router.post("/updateCourseProgress", auth, isStudent, updateCourseProgress);
 router.delete("/deleteCourse", deleteCourse);
+
+router.post("/createrating", auth, isStudent, createRating);
+router.get("/getavgrating", getAvgRating);
+router.get("/allratiingreviwes", getAllRatingAndReviews);
+
 // ********************************************************************************************************
 //                                      section routes
 // ********************************************************************************************************

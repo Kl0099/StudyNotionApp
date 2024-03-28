@@ -1,6 +1,7 @@
+import { setDrawer } from "../../slices/profile";
 import React from "react";
 import * as Icons from "react-icons/vsc";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, matchPath, useLocation } from "react-router-dom";
 
 const SideBarLink = ({ link, iconName }) => {
@@ -10,6 +11,7 @@ const SideBarLink = ({ link, iconName }) => {
   const matchRoute = (route) => {
     return matchPath({ path: route }, location.pathname);
   };
+  const { drawer } = useSelector((state) => state.profile);
   return (
     <NavLink
       to={link.path}
@@ -19,6 +21,7 @@ const SideBarLink = ({ link, iconName }) => {
           ? "bg-yellow-800 text-yellow-50"
           : "bg-opacity-0 text-richblack-300"
       } transition-all duration-200`}
+      onClick={() => dispatch(setDrawer(!drawer))}
     >
       <span
         className={`absolute left-0 top-0 h-full w-[0.15rem] bg-yellow-50 ${

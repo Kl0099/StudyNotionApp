@@ -366,3 +366,29 @@ export const markLectureAsComplete = async (data, token) => {
   toast.dismiss(toastId);
   return result;
 };
+export const createRating = async (data, token) => {
+  const toastId = toast.loading("Loading...");
+  console.log("data from rating : ", data);
+  let success = false;
+  try {
+    const response = await apiConnector(
+      "POST",
+      courseEndpoints.CREATE_RATING_API,
+      data,
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    );
+    if (!response?.data?.success) {
+      throw new Error("Could not create rating");
+    }
+    toast.success("Rating Created");
+    success = true;
+  } catch (error) {
+    success = false;
+    console.log("CREATE RATING API ERROR............", error);
+    toast.error(error.message);
+  }
+  toast.dismiss(toastId);
+  return success;
+};

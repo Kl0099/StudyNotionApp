@@ -6,7 +6,11 @@ const mongoose = require("mongoose");
 exports.createRating = async (req, res) => {
   try {
     const { courseId, rating, reviews } = req.body;
-    const { userId } = req.user.id;
+    // console.log("courseId: " + courseId);
+    // console.log("rating" + rating);
+    // console.log("review: " + reviews);
+    const userId = req.user.id;
+    // console.log("userId: " + userId);/
     const coursedetails = await Course.findOne({
       _id: courseId,
       studentsEnrolled: { $elemMatch: { $eq: userId } },
@@ -18,13 +22,13 @@ exports.createRating = async (req, res) => {
       });
     }
 
-    const alreadyreview = await RatingAndReviews.findOne({ user: userId });
-    if (alreadyreview) {
-      return res.status(401).json({
-        success: false,
-        message: "Course already reviewed by user",
-      });
-    }
+    // const alreadyreview = await RatingAndReviews.findOne({ user: userId });
+    // if (alreadyreview) {
+    //   return res.status(401).json({
+    //     success: false,
+    //     message: "Course already reviewed by user",
+    //   });
+    // }
 
     const ratingandreview = await RatingAndReviews.create({
       user: userId,

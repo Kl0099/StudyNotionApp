@@ -6,12 +6,13 @@ import "../../App.css";
 import { accountType } from "../../data/constants";
 import { apiConnector } from "../../services/apiConnector";
 import { categories } from "../../services/apis";
+import { setDrawer } from "../../slices/profile";
 import ProfileDropDown from "../auth/ProfileDropDown";
 import Catalog from "./Catalog";
 import axios from "axios";
 import { AiOutlineMenu, AiOutlineShoppingCart } from "react-icons/ai";
 import { BsChevronDown } from "react-icons/bs";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // const subLinks = [
 //   {
@@ -35,11 +36,11 @@ import { useSelector } from "react-redux";
 const Navbar = () => {
   const location = useLocation();
   const { token } = useSelector((state) => state.auth);
-  const { user } = useSelector((state) => state.profile);
+  const { user, drawer } = useSelector((state) => state.profile);
   const { totalItems } = useSelector((state) => state.cart);
 
   const [subLinks, setSubLinks] = useState([]);
-
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const fetchSubLinks = async () => {
     try {
@@ -82,7 +83,7 @@ const Navbar = () => {
         </NavLink>
 
         <nav>
-          <ul className=" mt-1 flex gap-x-6 text-richblack-25">
+          <ul className="hidden sm:flex mt-1  gap-x-6 text-richblack-25">
             {NavbarLinks.map((item, index) => (
               <li key={index}>
                 {item.title === "Catalog" ? (
@@ -167,7 +168,13 @@ const Navbar = () => {
             />
           )}
         </div>
-        <button className="mr-4 md:hidden">
+        <button
+          onClick={() => {
+            // dispatch(setDrawer(!drawer));
+            // console.log("hellow : ", drawer);
+          }}
+          className="mr-4 md:hidden"
+        >
           <AiOutlineMenu
             fontSize={24}
             fill="#AFB2BF"
