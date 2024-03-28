@@ -218,3 +218,30 @@ exports.getEnrolledCourses = async (req, res) => {
     });
   }
 };
+exports.instructorDashboard = async (req, res) => {
+  try {
+    const courseDetails = await Course.find({ instructor: req.user.id });
+    const courseData = courseDetails.map((course) => {
+      const totalEnrolledStudents = course.studentsEnrolled.length;
+      const totalAmountGenerated = course.price * totalEnrolledStudents;
+      const courseDataWithStates = {
+        _id: course._id,
+        courseName: course.courseName,
+        courseDescription: course.courseDescription,
+        totalAmountGenerated,
+        totalEnrolledStudents,
+      };
+      return courseDataWithStates;
+    });
+    res.status(200).json({
+      success: true,
+      courses: courseData,
+    });
+  } catch (error) {
+    console.log("error while generating course data for instructore");
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};

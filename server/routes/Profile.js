@@ -10,6 +10,7 @@ const {
   getAllUserDetails,
   updateProfilePic,
   getEnrolledCourses,
+  instructorDashboard,
 } = require("../controllers/Profile");
 const router = express.Router();
 
@@ -23,5 +24,5 @@ router.post(
 router.delete("/deleteaccount", auth, deleteAccount);
 router.get("/getallusersdetails", auth, getAllUserDetails);
 router.get("/getEnrolledCourses", auth, getEnrolledCourses);
-
+router.get("/instructorDashboard", auth, instructorDashboard);
 module.exports = router;
