@@ -9,6 +9,7 @@ import VideoDetails from "./components/Dashboard/VideoDetails/VideoDetails";
 import VideoDetailsSideBar from "./components/Dashboard/VideoDetails/VideoDetailsSideBar";
 import AddCourses from "./components/Dashboard/addCourses";
 import Cart from "./components/Dashboard/cart";
+import OpenRoute from "./components/auth/OpenRoute";
 import PrivateRoute from "./components/auth/PrivateRoute";
 import Footer from "./components/common/Footer";
 import Navbar from "./components/common/Navbar";
@@ -51,11 +52,19 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<Home />}
+          element={
+            <OpenRoute>
+              <Home />
+            </OpenRoute>
+          }
         />
         <Route
           path="/login"
-          element={<Login />}
+          element={
+            <OpenRoute>
+              <Login />
+            </OpenRoute>
+          }
         />
         <Route
           path="/forgot-password"
@@ -68,7 +77,11 @@ function App() {
 
         <Route
           path="/signup"
-          element={<Register />}
+          element={
+            <OpenRoute>
+              <Register />
+            </OpenRoute>
+          }
         />
         <Route
           path="/verify-email"

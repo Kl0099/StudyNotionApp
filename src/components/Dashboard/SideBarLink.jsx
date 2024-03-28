@@ -21,7 +21,9 @@ const SideBarLink = ({ link, iconName }) => {
           ? "bg-yellow-800 text-yellow-50"
           : "bg-opacity-0 text-richblack-300"
       } transition-all duration-200`}
-      onClick={() => dispatch(setDrawer(!drawer))}
+      onClick={
+        window.innerWidth < 628 ? () => dispatch(setDrawer(!drawer)) : () => {}
+      }
     >
       <span
         className={`absolute left-0 top-0 h-full w-[0.15rem] bg-yellow-50 ${

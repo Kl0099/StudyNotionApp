@@ -8,6 +8,7 @@ const Section = require("../models/Section");
 const SubSection = require("../models/SubSection");
 const CourseProgress = require("../models/CourseProgress");
 const { convertSecondsToDuration } = require("../utils/secToDuration");
+const { default: mongoose } = require("mongoose");
 //createcourse
 exports.createCourse = async (req, res) => {
   try {
@@ -454,7 +455,9 @@ exports.getFullCourseDetails = async (req, res) => {
 };
 exports.updateCourseProgress = async (req, res) => {
   const { courseId, subsectionId } = req.body;
-  console.log("subSection id : ", subsectionId);
+  // console.log("subSection id : ", subsectionId);
+  console.log("courseId : ", courseId);
+  console.log("objectcourseId : ", new mongoose.Types.ObjectId(courseId));
   const userId = req.user.id;
   try {
     const subSection = await SubSection.findById(subsectionId);
@@ -464,10 +467,12 @@ exports.updateCourseProgress = async (req, res) => {
         message: "course subsection not found",
       });
     }
+    // let objectcourseId = new mongoose.Types.ObjectId(courseId);
     let courseProgress = await CourseProgress.findOne({
-      courseID: courseId,
+      courseId: courseId,
       userId: userId,
     });
+    console.log("courseProgress : ", courseProgress);
     if (!courseProgress) {
       return res.status(404).json({
         success: false,

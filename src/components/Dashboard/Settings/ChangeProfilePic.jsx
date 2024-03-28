@@ -63,9 +63,9 @@ const ChangeProfilePic = () => {
           alt={user?.firstName}
           className="aspect-square w-[50px] sm:w-[78px] rounded-full object-cover"
         />
-        <div className=" flex flex-col sm:flex-row  sm:space-y-2">
+        <div className=" flex flex-col sm:space-y-2">
           <p>Change Profile Picture</p>
-          <div className="  flex flex-col sm:flex-row gap-3">
+          <div className=" flex sm:flex-row flex-col gap-3">
             <input
               type="file"
               name="file"

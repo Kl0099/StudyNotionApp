@@ -241,7 +241,7 @@ exports.directEnrolled = async (req, res) => {
         });
       }
       const courseProgress = await CourseProgress.create({
-        courseID: courseId,
+        courseId: courseId,
         userId: userId,
         completedVideos: [],
       });

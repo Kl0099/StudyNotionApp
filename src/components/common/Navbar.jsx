@@ -11,7 +11,9 @@ import ProfileDropDown from "../auth/ProfileDropDown";
 import Catalog from "./Catalog";
 import axios from "axios";
 import { AiOutlineMenu, AiOutlineShoppingCart } from "react-icons/ai";
-import { BsChevronDown } from "react-icons/bs";
+import { BsChevronDown, BsCrosshair } from "react-icons/bs";
+import { FiCrosshair } from "react-icons/fi";
+import { RxCross1 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 
 // const subLinks = [
@@ -170,15 +172,23 @@ const Navbar = () => {
         </div>
         <button
           onClick={() => {
-            // dispatch(setDrawer(!drawer));
+            dispatch(setDrawer(!drawer));
             // console.log("hellow : ", drawer);
+            console.log("innerwidth :", window.innerWidth);
           }}
           className="mr-4 md:hidden"
         >
-          <AiOutlineMenu
-            fontSize={24}
-            fill="#AFB2BF"
-          />
+          {drawer ? (
+            <RxCross1
+              fontSize={24}
+              fill="#AFB2BF"
+            />
+          ) : (
+            <AiOutlineMenu
+              fontSize={24}
+              fill="#AFB2BF"
+            />
+          )}
         </button>
       </div>
     </div>

@@ -16,6 +16,7 @@ const ViewCourse = () => {
   const [reviewModal, setReviewModal] = useState(false);
   const { courseId } = useParams();
   const { token } = useSelector((state) => state.auth);
+  const { drawer } = useSelector((state) => state.profile);
   const dispatch = useDispatch();
   useEffect(() => {
     const getCourseSpecificDetails = async () => {
@@ -38,7 +39,7 @@ const ViewCourse = () => {
   return (
     <>
       <div className="relative flex min-h-[calc(100vh-3.5rem)]">
-        <VideoDetailsSideBar setReviewModal={setReviewModal} />
+        {drawer && <VideoDetailsSideBar setReviewModal={setReviewModal} />}
         <div className="h-[calc(100vh-3.5rem)] flex-1 overflow-auto">
           <div className="mx-6">
             <Outlet />
