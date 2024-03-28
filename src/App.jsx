@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 import EditCourse from "./components/Dashboard/EditCourse/EditCourse";
 import EnrolledCourses from "./components/Dashboard/EnrolledCourses";
+import Instructor from "./components/Dashboard/Instructor";
 import MyCourses from "./components/Dashboard/MyCourses";
 import MyProfile from "./components/Dashboard/MyProfile";
 import Settings from "./components/Dashboard/Settings/index";
@@ -53,9 +54,9 @@ function App() {
         <Route
           path="/"
           element={
-            // <OpenRoute>
-            <Home />
-            // </OpenRoute>
+            <OpenRoute>
+              <Home />
+            </OpenRoute>
           }
         />
         <Route
@@ -139,6 +140,10 @@ function App() {
               <Route
                 path="/dashboard/add-course"
                 element={<AddCourses />}
+              />
+              <Route
+                path="dashboard/instructor"
+                element={<Instructor />}
               />
               <Route
                 path="/dashboard/my-courses"

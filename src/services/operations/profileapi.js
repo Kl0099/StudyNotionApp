@@ -146,3 +146,28 @@ export const getUserEnrolledCourses = async (token) => {
   }
   // toast.dismiss(toastid);
 };
+export const getInstructoreData = async (token) => {
+  const toastid = toast.loading("Loading...");
+  let result = [];
+
+  try {
+    const response = await apiConnector(
+      "GET",
+      profileEndpoints.GET_INSTRUCTOR_DATA_API,
+      null,
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    );
+    if (!response.data.success) {
+      throw new Error("error while fetching instructor course data");
+    }
+    result = response?.data?.courses;
+  } catch (error) {
+    console.log("error while instructore course data fetching", error.message);
+
+    toast.error(error.message);
+  }
+  toast.dismiss(toastid);
+  return result;
+};
