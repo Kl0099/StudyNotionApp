@@ -105,9 +105,10 @@ exports.getAllRatingAndReviews = async (req, res) => {
         select: "courseName",
       })
       .exec();
+    console.log("rating and review : ", ratingreview);
     return res.status(200).json({
       success: true,
-      message: ratingreview,
+      data: ratingreview,
     });
   } catch (error) {
     console.error(error);

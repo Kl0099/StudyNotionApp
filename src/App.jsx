@@ -53,9 +53,9 @@ function App() {
         <Route
           path="/"
           element={
-            <OpenRoute>
-              <Home />
-            </OpenRoute>
+            // <OpenRoute>
+            <Home />
+            // </OpenRoute>
           }
         />
         <Route

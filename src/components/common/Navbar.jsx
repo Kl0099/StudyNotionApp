@@ -1,19 +1,28 @@
 import logo from "../../assets/Logo/Logo-Full-Light.png";
 import NavbarLinks from "../../data/navbar-links";
-import React, { useEffect, useState } from "react";
-import { Link, NavLink, matchPath, useLocation } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  Link,
+  NavLink,
+  matchPath,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import "../../App.css";
 import { accountType } from "../../data/constants";
+import useOnClickOutside from "../../hooks/useOnClickOutside";
 import { apiConnector } from "../../services/apiConnector";
 import { categories } from "../../services/apis";
 import { setDrawer } from "../../slices/profile";
+import { ACCOUNT_TYPE } from "../../utils/constants";
 import ProfileDropDown from "../auth/ProfileDropDown";
 import Catalog from "./Catalog";
 import axios from "axios";
 import { AiOutlineMenu, AiOutlineShoppingCart } from "react-icons/ai";
-import { BsChevronDown, BsCrosshair } from "react-icons/bs";
+import { BsChevronDown, BsChevronUp, BsCrosshair } from "react-icons/bs";
 import { FiCrosshair } from "react-icons/fi";
 import { RxCross1 } from "react-icons/rx";
+import { VscAccount, VscHome, VscSignIn } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
 
 // const subLinks = [
@@ -40,10 +49,12 @@ const Navbar = () => {
   const { token } = useSelector((state) => state.auth);
   const { user, drawer } = useSelector((state) => state.profile);
   const { totalItems } = useSelector((state) => state.cart);
-
+  const navigate = useNavigate();
   const [subLinks, setSubLinks] = useState([]);
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState(false);
   const fetchSubLinks = async () => {
     try {
       setLoading(true);
@@ -57,6 +68,9 @@ const Navbar = () => {
       console.log(`Error fetching : ${error}`);
     }
   };
+  const ref = useRef(null);
+
+  useOnClickOutside(ref, () => setOpen(false));
 
   useEffect(() => {
     // console.log("category url : ", categories.CATEGORIES_API);
@@ -85,7 +99,7 @@ const Navbar = () => {
         </NavLink>
 
         <nav>
-          <ul className="hidden sm:flex mt-1  gap-x-6 text-richblack-25">
+          <ul className="hidden md:flex mt-1  gap-x-6 text-richblack-25">
             {NavbarLinks.map((item, index) => (
               <li key={index}>
                 {item.title === "Catalog" ? (
@@ -133,7 +147,7 @@ const Navbar = () => {
         </nav>
 
         {/* Login / Signup / Dashboard */}
-        <div className="hidden items-center gap-x-4 md:flex">
+        <div className="hidden  items-center gap-x-4 md:flex">
           {user && user?.accountType !== accountType.Instructor && (
             <Link
               to="/dashboard/cart"
@@ -149,14 +163,14 @@ const Navbar = () => {
           )}
           {token === null && (
             <Link to="/login">
-              <button className="rounded-[8px] border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 hover:scale-95">
+              <button className="rounded-[8px] border border-richblack-700 bg-richblack-800 p-1 sm:px-[12px] sm:py-[8px] text-richblack-100 hover:scale-95">
                 Log in
               </button>
             </Link>
           )}
           {token === null && (
             <Link to="/signup">
-              <button className="rounded-[8px] border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 hover:scale-95">
+              <button className="rounded-[8px] border border-richblack-700 bg-richblack-800 p-1 sm:px-[12px] sm:py-[8px] text-richblack-100 hover:scale-95">
                 Sign up
               </button>
             </Link>
@@ -170,26 +184,136 @@ const Navbar = () => {
             />
           )}
         </div>
-        <button
-          onClick={() => {
-            dispatch(setDrawer(!drawer));
-            // console.log("hellow : ", drawer);
-            console.log("innerwidth :", window.innerWidth);
-          }}
-          className="mr-4 md:hidden"
-        >
-          {drawer ? (
-            <RxCross1
-              fontSize={24}
-              fill="#AFB2BF"
-            />
-          ) : (
+        {window.innerWidth < 628 && token === null && (
+          <div>
             <AiOutlineMenu
               fontSize={24}
-              fill="#AFB2BF"
+              onClick={() => {
+                setOpen(!open);
+                console.log("hii");
+              }}
             />
-          )}
-        </button>
+            {open && (
+              <div>
+                <div
+                  onClick={(e) => e.stopPropagation()}
+                  className="absolute top-[4%] right-10 z-[1000] divide-y-[1px] divide-richblack-700 overflow-hidden rounded-md border-[1px] border-richblack-700 bg-richblack-800 h-fit "
+                  ref={ref}
+                >
+                  {/* home  */}
+                  <Link
+                    to="/"
+                    onClick={() => setOpen(false)}
+                  >
+                    <div className="flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-richblack-100 hover:bg-richblack-700 hover:text-richblack-25">
+                      Home
+                    </div>
+                  </Link>
+
+                  {/* signup  */}
+                  <div
+                    onClick={() => {
+                      navigate("/signup");
+                      setOpen(false);
+                    }}
+                    className="flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-richblack-100 hover:bg-richblack-700 hover:text-richblack-25"
+                  >
+                    sign up
+                  </div>
+
+                  {/* login  */}
+
+                  <div
+                    onClick={() => {
+                      navigate("/login");
+                      setOpen(false);
+                    }}
+                    className="flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-richblack-100 hover:bg-richblack-700 hover:text-richblack-25"
+                  >
+                    Log in
+                  </div>
+                  {/* aboutUs  */}
+                  <div
+                    onClick={() => {
+                      navigate("/aboutus");
+                      setOpen(false);
+                    }}
+                    className="flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-richblack-100 hover:bg-richblack-700 hover:text-richblack-25"
+                  >
+                    about us
+                  </div>
+                  {/* contactus  */}
+                  <div
+                    onClick={() => {
+                      navigate("/contactus");
+                      setOpen(false);
+                    }}
+                    className="flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-richblack-100 hover:bg-richblack-700 hover:text-richblack-25"
+                  >
+                    Contact us
+                  </div>
+                  {/* catelog  */}
+                  <div
+                    onClick={() => {
+                      setVisible(!visible);
+                    }}
+                    className="flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-richblack-100 hover:bg-richblack-700 hover:text-richblack-25"
+                  >
+                    <p className="flex gap-3 items-center">
+                      {"Catelog"}
+                      <span>
+                        {visible ? <BsChevronUp /> : <BsChevronDown />}
+                      </span>
+                    </p>
+                  </div>
+                  {/* catelog data  */}
+                  {visible &&
+                    subLinks?.map((links, index) => (
+                      <div
+                        key={index}
+                        onClick={() => {
+                          navigate(
+                            `/catalog/${links?.name
+                              .split(" ")
+                              .join("-")
+                              .toLowerCase()}`
+                          );
+                          setOpen(false);
+                        }}
+                        className="flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-richblack-100 hover:bg-richblack-700 hover:text-richblack-25"
+                      >
+                        {links.name}
+                      </div>
+                    ))}
+                </div>
+              </div>
+            )}
+
+            {/* this is for deails  */}
+          </div>
+        )}
+        {token && (
+          <button
+            onClick={() => {
+              dispatch(setDrawer(!drawer));
+              // console.log("hellow : ", drawer);
+              console.log("innerwidth :", window.innerWidth);
+            }}
+            className="mr-4 md:hidden"
+          >
+            {drawer ? (
+              <RxCross1
+                fontSize={24}
+                fill="#AFB2BF"
+              />
+            ) : (
+              <AiOutlineMenu
+                fontSize={24}
+                fill="#AFB2BF"
+              />
+            )}
+          </button>
+        )}
       </div>
     </div>
   );

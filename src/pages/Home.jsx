@@ -8,6 +8,7 @@ import "../App.css";
 // Image and Video Import
 import Banner from "../assets/Images/banner.mp4";
 import Footer from "../components/common/Footer.jsx";
+import ReviewSlider from "../components/common/ReviewSlider.jsx";
 import BecomeInstuctore from "../components/core/homepage/BecomeInstuctore.jsx";
 import ExploreMore from "../components/core/homepage/ExploreMore.jsx";
 import Learning from "../components/core/homepage/Learning.jsx";
@@ -188,13 +189,16 @@ const Home = () => {
             <Learning />
           </div>
         </div>
+        <div className="relative mx-auto my-20 flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 bg-richblack-900 text-white">
+          {/* Become a instructor section */}
+          <BecomeInstuctore />
 
-        {/* section 4 become an instuctore  */}
-        <BecomeInstuctore />
-        <div>
-          <h2 className="text-3xl">Reviwes from other learners</h2>
-          <div className="h-[150px]"></div>
+          {/* Reviws from Other Learner */}
+          <h1 className="text-center text-4xl font-semibold mt-8">
+            Reviews from other learners
+          </h1>
         </div>
+        <ReviewSlider />
       </div>
       <Footer />
     </div>

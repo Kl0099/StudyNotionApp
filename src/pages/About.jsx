@@ -131,6 +131,7 @@ const About = () => {
           Reviews from other learners
         </h1>
         {/* <ReviewSlider /> */}
+        <ReviewSlider />
       </div>
       <Footer />
     </div>

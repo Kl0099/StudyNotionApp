@@ -9,7 +9,7 @@ const AddCourses = () => {
           <h1 className="mb-14 text-3xl font-medium text-richblack-5">
             Add Course
           </h1>
-          <div className="flex-1">
+          <div className=" flex-1">
             <RenderSteps />
           </div>
         </div>

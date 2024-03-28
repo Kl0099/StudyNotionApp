@@ -173,7 +173,7 @@ const CourseInformationForm = () => {
     <>
       <form
         onSubmit={handleSubmit(onhandlesubmit)}
-        className="space-y-8 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-6"
+        className="space-y-8  rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-2 sm:p-6"
         encType="multipart/form-data"
       >
         {/* course title  */}

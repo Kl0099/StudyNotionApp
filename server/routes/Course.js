@@ -36,10 +36,6 @@ router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses);
 router.post("/updateCourseProgress", auth, isStudent, updateCourseProgress);
 router.delete("/deleteCourse", deleteCourse);
 
-router.post("/createrating", auth, isStudent, createRating);
-router.get("/getavgrating", getAvgRating);
-router.get("/allratiingreviwes", getAllRatingAndReviews);
-
 // ********************************************************************************************************
 //                                      section routes
 // ********************************************************************************************************
@@ -52,9 +48,18 @@ router.post("/deleteSection", auth, isInstructor, deleteSection);
 // ********************************************************************************************************
 //                                      subsection routes
 // ********************************************************************************************************
+
 router.post("/addSubSection", auth, isInstructor, createSubSection);
 // Update a Section
 router.post("/updateSubSection", auth, isInstructor, updateSubSection);
 // Delete a Section
 router.post("/deleteSubSection", auth, isInstructor, deleteSubSection);
+
+// ********************************************************************************************************
+//                                      rating and reviews routes
+// ********************************************************************************************************
+router.post("/createrating", auth, isStudent, createRating);
+router.get("/getAverageRating", getAvgRating);
+router.get("/getReviews", getAllRatingAndReviews);
+
 module.exports = router;

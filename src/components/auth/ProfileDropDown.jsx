@@ -63,40 +63,6 @@ const ProfileDropDown = ({
             <VscSignOut className="text-lg" />
             Logout
           </div>
-          {user && user.accountType === ACCOUNT_TYPE.STUDENT && (
-            <div className=" visible sm:hidden">
-              {/* about us  */}
-              <div
-                onClick={() => {
-                  // dispatch(logout(navigate));
-                  navigate("/aboutus");
-                  setOpen(false);
-                }}
-                className="flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-richblack-100 hover:bg-richblack-700 hover:text-richblack-25"
-              >
-                About Us
-              </div>
-              {/* contact us  */}
-              <div
-                onClick={() => {
-                  // dispatch(logout(navigate));
-                  navigate("contactus");
-                  setOpen(false);
-                }}
-                className="flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-richblack-100 hover:bg-richblack-700 hover:text-richblack-25"
-              >
-                Conact Us
-              </div>
-            </div>
-          )}
-          <div className="  w-fit ">
-            <Catalog
-              NavbarLinks={NavbarLinks}
-              matchRoute={matchRoute}
-              subLinks={subLinks}
-              loading={loading}
-            />
-          </div>
         </div>
       )}
     </button>
